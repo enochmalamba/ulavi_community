@@ -14,9 +14,11 @@ function loadDarkMode() {
   } else {
     document.body.classList.remove("dark-theme");
   }
-  uiSwitch.innerHTML = isDarkMode ? "Light Mode" : "Dark Mode";
+  uiSwitch.innerHTML = isDarkMode
+    ? "<i class='bx bx-sun'></i>Light Mode"
+    : "<i class='bx bx-moon'></i>Dark Mode";
 }
 // Load dark mode preference on page load
-// loadDarkMode();
+loadDarkMode();
 // Add event listener to the switch button
 uiSwitch.addEventListener("click", toggleDarkMode);

@@ -29,6 +29,17 @@ if ($result->num_rows > 0) {
     $bio = $user_info['bio'];
     $location = $user_info['user_location'];
     $profilePhoto = $user_info['profile_photo'];
+    //get user title/proffession
+    $titleStml = $conn->prepare("SELECT user_title FROM user_profile WHERE user_id = ?");
+    $titleStml->bind_param("i", $user_id);
+    $titleStml->execute();
+    $titleResult = $titleStml->get_result();
+    $title = $titleResult->fetch_assoc()['user_title'];
+} else {
+    $user_role = "Unverified";
+    $bio = "No bio yet";
+    $location = "No location yet";
+    $profilePhoto = "default.jpg";
 }
 
 
@@ -80,19 +91,30 @@ if ($result->num_rows > 0) {
                 <div class="profile-view">
                     <div class="profile-header">
                         <img src="<?php echo htmlspecialchars($profilePhoto); ?>" alt="<?php echo htmlspecialchars($username); ?>" class="profile-img">
-                        <div class="profile-name">
+                        <div class="profile-details">
                             <h3 class="title sml"><?php echo htmlspecialchars($username); ?></h3>
-                            <p><?php echo htmlspecialchars($user_role); ?></p>
+                            <p><?php echo htmlspecialchars($title); ?></p>
+                            <div class="user-counts">
+                                <div class="count-card">
+                                    <h4>57</h4>
+                                    <p>Posts</p>
+                                </div>
+                                <div class="count-card">
+                                    <h4>133K</h4>
+                                    <p>Followers </p>
+                                </div>
+                                <div class="count-card">
+                                    <h4>Gold Tier</h4>
+                                    <p>Membership </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <p class="bio"><?php echo htmlspecialchars($bio); ?></p>
-                    <div class="profile-badges">
-                        <div class="profile-type-badge"></div>
-                    </div>
                 </div>
                 <div class="user-posts">
 
-                    <div class="post">
+                    <!-- <div class="post">
                         <div class="post-header">
                             <div class="post-details">
                                 <div class="img"></div>
@@ -139,10 +161,11 @@ if ($result->num_rows > 0) {
                             </ul>
 
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="no-posts">
-                        <img src="no-posts.png" alt="<?php echo htmlspecialchars($username); ?> has no posts, please check back later">
+                        <img src="no-posts.png" alt="<?php echo htmlspecialchars($username); ?> has no posts, please check back later">#
+                        <p><?php echo htmlspecialchars($username); ?> has no posts, please check back later</p>
 
                     </div>
                 </div>
