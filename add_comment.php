@@ -11,7 +11,7 @@ if (isset($_POST['submit_comment'])) {
     $commentStmt->bind_param("iis", $postID, $userID, $comment);
     if ($commentStmt->execute()) {
         echo "<script>
-                window.location.href = 'view_post.php?post_id=" . $postID . "';
+                window.location.href = 'post.php?post_id=" . $postID . "';
             </script>";
     } else {
         echo "<script>alert('Error: " . $conn->error . "');</script>";

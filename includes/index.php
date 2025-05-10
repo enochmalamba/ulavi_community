@@ -18,7 +18,7 @@
     <div class="hero">
         <div class="hero-container">
             <div class="hero-text">
-                <img src="logo.png" alt="localsketch logo" class="logo">
+                <img src="logo_black.png" alt="localsketch logo" class="logo">
                 <h2 class="hero-title">
                     Share. Connect. Collaborate.
                 </h2>
@@ -42,6 +42,10 @@
             </div>
         </div>
 
+    </div>
+    <div class="about">
+        <div class="bar"></div>
+        <h2 class="title">A community for everyone with an i</h2>
     </div>
 </body>
 

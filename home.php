@@ -1,6 +1,12 @@
 <?php
 session_start();
 require 'includes/config.php';
+
+if (isset($_POST['logout'])) {
+    session_destroy();
+    header("Location: signin.php");
+    exit();
+}
 //get users to show artists to follow 
 $usersArray = array();
 $usersSql = "SELECT * FROM community_people";
@@ -13,7 +19,7 @@ if ($usersResult->num_rows > 0) {
         $user['user_id'] = $aUser['user_id'];
 
         //get the photo and the title of the user being displayed
-        $stmt = $conn->prepare("SELECT profile_photo, user_title FROM user_info WHERE user_id = ?");
+        $stmt = $conn->prepare("SELECT profile_photo, user_title FROM user_profile WHERE user_id = ?");
         $stmt->bind_param("i", $aUser['user_id']);
         $stmt->execute();
         $theResult = $stmt->get_result();
@@ -77,8 +83,8 @@ if ($result && $result->num_rows > 0) {
         if ($userResult->num_rows === 1) {
             $postAuthor = $userResult->fetch_assoc();
 
-            //then query for user_info table so as to get role and profile pict
-            $profileInfoStmt = $conn->prepare("SELECT profile_photo, user_role FROM user_info WHERE user_id  = ?");
+            //then query for user_profile table so as to get role and profile pict
+            $profileInfoStmt = $conn->prepare("SELECT profile_photo, user_role FROM user_profile WHERE user_id  = ?");
             $profileInfoStmt->bind_param("i", $post['user_id']);
             $profileInfoStmt->execute();
 
@@ -155,6 +161,12 @@ $conn->close();
 </head>
 
 <body>
+    <div class="log-out">
+        <form action="home.php" method="post">
+            <button type="submit" name="logout">Log Out</button>
+        </form>
+
+    </div>
     <main>
         <div class="overlay" id="overlay"></div>
 
@@ -177,9 +189,10 @@ $conn->close();
                     <li><a href=""><i class='bx bx-menu-alt-left'></i>More</a></li>
                 </ul>
                 <ul class="user-nav">
-                    <li id="uiSwitch"><i class="bx bx-sun"></i>Light mod</li>
-                    <!-- <li><a href="">Light mode</a></li> -->
-                    <li><a href=""><i class='bx bx-bell'></i>Notifications</a></li>
+                    <li>
+                        <span class="nav-btn" id="uiSwitch"><i class="bx bx-sun"></i>Light mode</span>
+                    </li>
+                    <li><a href=""><i class='bx bx-log-out'></i>Log out</a></li>
 
                     <li><a href="profile.php"><i class='bx bx-user'></i><?php echo htmlspecialchars($_SESSION['username']) ?></a></li>
                 </ul>

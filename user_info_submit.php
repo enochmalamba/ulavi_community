@@ -10,7 +10,7 @@ if (isset($_POST['enter_user_data1'])) {
     $dob = $_POST['birthday'];
     $location = sanitize_input($_POST['location']);
     $gender = $_POST['gender'];
-    $stmt = $conn->prepare("INSERT INTO user_info (user_id, dob, user_location, gender) VALUES (?,?,?,?)");
+    $stmt = $conn->prepare("INSERT INTO user_profile (user_id, dob, user_location, gender) VALUES (?,?,?,?)");
     $stmt->bind_param("isss", $user_id, $dob, $location, $gender);
     if ($stmt->execute()) {
         $_SESSION['data_submit_msg'] = "Data submitted successfully!";
@@ -30,7 +30,7 @@ if (isset($_POST['enter_user_data2'])) {
     }
 
     if (move_uploaded_file($imgTempPath, $imgSavePath)) {
-        $stmt = $conn->prepare("UPDATE user_info SET profile_photo = ?, user_title = ?, bio = ? WHERE user_id = ?");
+        $stmt = $conn->prepare("UPDATE user_profile SET profile_photo = ?, user_title = ?, bio = ? WHERE user_id = ?");
 
         $stmt->bind_param("sssi", $imgSavePath, $title, $bio, $user_id);
 

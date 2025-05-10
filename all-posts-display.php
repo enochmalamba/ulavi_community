@@ -41,7 +41,7 @@ if ($result && $result->num_rows > 0) {
             $postAuthor = $userResult->fetch_assoc();
 
             // Get profile info
-            $profileInfoStmt = $conn->prepare("SELECT profile_photo, user_role FROM user_info WHERE user_id = ?");
+            $profileInfoStmt = $conn->prepare("SELECT profile_photo, user_role FROM user_profile WHERE user_id = ?");
             $profileInfoStmt->bind_param("i", $post['user_id']);
             $profileInfoStmt->execute();
             $profileInfoResult = $profileInfoStmt->get_result();
@@ -124,7 +124,7 @@ $result->free();
                 </ul>
                 <ul class="user-nav">
                     <li><a href=""><i class="bx bx-sun"></i>Light mode</a></li>
-                    <li><a href=""><i class='bx bx-bell'></i>Notifications</a></li>
+                    <li><a href=""><i class='bx bx-log-out'></i>Log out</a></li>
                     <li><a href="user/profile.php"><i class='bx bx-user'></i>Profile</a></li>
                 </ul>
             </nav>

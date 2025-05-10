@@ -47,7 +47,7 @@ if (isset($_GET['post_id']) && is_numeric($_GET['post_id'])) {
     $userResult = $userStmt->get_result();
     if ($userResult->num_rows === 1) {
         $postAuthor = $userResult->fetch_assoc();
-        $profileInfoStmt = $conn->prepare("SELECT profile_photo, user_role FROM user_info WHERE user_id = ?");
+        $profileInfoStmt = $conn->prepare("SELECT profile_photo, user_role FROM user_profile WHERE user_id = ?");
         $profileInfoStmt->bind_param("i", $post['user_id']);
         $profileInfoStmt->execute();
 
@@ -144,7 +144,7 @@ if (isset($_GET['post_id']) && is_numeric($_GET['post_id'])) {
                 </ul>
                 <ul class="user-nav">
                     <li><a href=""><i class="bx bx-sun"></i>Light mode</a></li>
-                    <li><a href=""><i class='bx bx-bell'></i>Notifications</a></li>
+                    <li><a href=""><i class='bx bx-log-out'></i>Log out</a></li>
 
                     <li><a href="user/profile.php"><i class='bx bx-user'></i>Profile</a></li>
                 </ul>
