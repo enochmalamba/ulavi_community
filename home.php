@@ -1,6 +1,7 @@
 <?php
 session_start();
 require 'includes/config.php';
+include_once 'includes/functions.php';
 
 if (isset($_POST['logout'])) {
     session_destroy();
@@ -161,7 +162,7 @@ $conn->close();
 </head>
 
 <body>
-    <div class="log-out">
+    <div class="log-out" style="display: none;">
         <form action="home.php" method="post">
             <button type="submit" name="logout">Log Out</button>
         </form>
@@ -169,7 +170,29 @@ $conn->close();
     </div>
     <main>
         <div class="overlay" id="overlay"></div>
+        <div id="create_post" class="create_post">
+            <form action="post_submit.php" method="post" enctype="multipart/form-data">
+                <label for="title">Enter post title <span>*</span></label>
+                <input type="text" name="title" id="title" placeholder="Write an attention-grabbing headline..." required>
 
+                <label for="content">Enter post content <span>*</span></label>
+                <textarea name="content" id="content" placeholder="Share your thoughts, ideas, or story in detail..." required></textarea>
+
+                <label for="post_image">Upload with an image (Optional)</label>
+                <input type="file" name="post_image" id="post_image" accept="image/*">
+                <div class="upload-img-preview">
+                    <img src="" alt="Image preview" id="img-preview">
+                    <span class="material-symbols-outlined" id="img-preview-close">
+                        close
+                    </span>
+                </div>
+                <div class="form-btns">
+                    <button type="reset">Cancel</button>
+                    <button type="submit" name="create_post">Publish Post</button>
+                </div>
+
+            </form>
+        </div>
 
         <div class="header">
             <a href="home.php" class="title sml logo"> <i class='bx bxs-palette'></i> <span>ulavi <br> community</span></a>
@@ -178,19 +201,37 @@ $conn->close();
                 <input type="text" name="query" placeholder="Search..">
                 <button type="submit"><i class='bx bx-search'></i></button>
             </form>
+            <div class="mobile-nav">
+                <span><i class='bx bx-search'></i></span>
+                <span class="light-mode"><i class="bx bx-sun"></i></span>
+                <span class="dark-mode"><i class="bx bx-moon"></i></span>
+                <a href="profile.php"><i class="bx bx-user"></i></a>
+
+            </div>
         </div>
         <div class="container">
             <nav class="navigation">
                 <ul class="page-nav">
-                    <li><a href="" class="active"><i class='bx bxs-home-alt-2'></i>Home</a></li>
-                    <li><a href=""><i class='bx bx-group'></i>Community</a></li>
-                    <li><a href="create_post.php" class="post-link"><i class='bx bx-border-circle bx-plus'></i>Post</a></li>
-                    <li><a href=""><i class='material-symbols-outlined'>person_play</i>Local talents</a></li>
-                    <li><a href=""><i class='bx bx-menu-alt-left'></i>More</a></li>
+                    <li><a href="" class="active"><i class='bx bxs-home-alt-2'></i>
+                            <div>Home</div>
+                        </a></li>
+                    <li><a href=""><i class='bx bx-group'></i>
+                            <div>Community</div>
+                        </a></li>
+                    <li><a href="create_post.php"><i class='bx  bx-plus'></i>
+                            <div>Post</div>
+                        </a></li>
+                    <li><a href=""><i class='material-symbols-outlined'>person_play</i>
+                            <div>Local talents</div>
+                        </a></li>
+                    <li id="menu-btn"><span class="nav-btn"><i class='bx bx-menu'></i>
+                            <div>More</div>
+                        </span></li>
                 </ul>
                 <ul class="user-nav">
                     <li>
-                        <span class="nav-btn" id="uiSwitch"><i class="bx bx-sun"></i>Light mode</span>
+                        <span class="nav-btn light-mode"><i class="bx bx-sun"></i>Light mode</span>
+                        <span class="nav-btn dark-mode"><i class="bx bx-moon"></i>Dark mode</span>
                     </li>
                     <li><a href=""><i class='bx bx-log-out'></i>Log out</a></li>
 
@@ -198,7 +239,11 @@ $conn->close();
                 </ul>
             </nav>
             <div class="feed">
-                <?php if (!empty($usersArray)):  ?>
+                <div class="create-post-btn">
+                    <h2 class="title sml" style="padding-left: 5px;">Create post</h2>
+                    <p>Share your thoughts, ideas, or story...</p>
+                </div>
+                <!-- <?php if (!empty($usersArray)):  ?>
                     <h2 class="title sml">Profiles</h2>
                     <div class="feed-profiles-row">
                         <?php foreach ($usersArray as $profile):  ?>
@@ -212,7 +257,7 @@ $conn->close();
                             </div>
                         <?php endforeach;  ?>
                     </div>
-                <?php endif;  ?>
+                <?php endif;  ?> -->
                 <?php if (!empty($postsArray)):  ?>
                     <?php foreach ($postsArray as $post): ?>
                         <div class="post">
@@ -225,22 +270,22 @@ $conn->close();
                                         class="img" />
                                     <div class="post-author">
                                         <h4 class="pa-name"><?php echo htmlspecialchars($post['author']['name']); ?> </h4>
-                                        <small><?php echo htmlspecialchars($post['author']['user_role']); ?> &bull; <?php echo htmlspecialchars($post['date']); ?></small>
+                                        <small><!--<?php echo htmlspecialchars($post['author']['user_role']); ?> &bull;--> <?php echo format_time(strtotime($post['date'])); ?></small>
                                     </div>
                                 </div>
-                                <div class="post-category">
+                                <!-- <div class="post-category" >
                                     <a href="">
                                         <span class="material-symbols-outlined"><?php echo htmlspecialchars($categoryIcon); ?></span> <?php echo htmlspecialchars($category); ?>
                                     </a>
-                                </div>
+                                </div> -->
                             </div>
                             <a href="post.php?post_id=<?php echo $post['post_id']; ?>" class="post-link">
                                 <h3 class="post-title title sml"><?php echo $post['title']; ?></h3>
                                 <p class="post-content">
                                     <?php
                                     // Show truncated content on the feed
-                                    $truncatedContent = substr($post['content'], 0, 350);
-                                    $suffix = strlen($post['content']) > 350 ? '...<strong>more</strong>' : '';
+                                    $truncatedContent = substr($post['content'], 0, 150);
+                                    $suffix = strlen($post['content']) > 150 ? '...<strong>more</strong>' : '';
                                     echo nl2br(htmlspecialchars($truncatedContent)) . $suffix;
                                     ?>
                                 </p>
@@ -249,6 +294,8 @@ $conn->close();
                                     <div class="post-image">
                                         <img src="<?php echo htmlspecialchars($post['media_url']); ?>" alt="<?php echo htmlspecialchars($post['title']); ?>">
                                     </div>
+
+
                                 <?php endif; ?>
                             </a>
                             <div class="post-interactions">

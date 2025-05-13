@@ -1,24 +1,64 @@
-const uiSwitch = document.getElementById("uiSwitch");
+const overlay = document.getElementById("overlay");
+const lightModeBtns = document.querySelectorAll(".light-mode");
+const darkModeBtns = document.querySelectorAll(".dark-mode");
+const menuContainer = document.getElementById("menu");
+const menuBtn = document.getElementById("menu-btn");
 
-function toggleDarkMode() {
-  document.body.classList.toggle("dark-theme");
-  const isDarkMode = document.body.classList.contains("dark-theme");
-  localStorage.setItem("darkMode", isDarkMode);
-  uiSwitch.innerHTML = isDarkMode ? "Light Mode" : "Dark Mode";
+lightModeBtns.forEach((btn) => {
+  btn.addEventListener("click", toggleLightMode);
+});
+
+darkModeBtns.forEach((btn) => {
+  btn.addEventListener("click", toggleDarkMode);
+});
+
+function toggleLightMode() {
+  localStorage.setItem("theme", "light");
+  loadTheme();
 }
 
-function loadDarkMode() {
-  const isDarkMode = localStorage.getItem("darkMode") === "true";
-  if (isDarkMode) {
+function toggleDarkMode() {
+  localStorage.setItem("theme", "dark");
+  loadTheme();
+}
+
+function loadTheme() {
+  const theme = localStorage.getItem("theme");
+  if (theme === "dark") {
     document.body.classList.add("dark-theme");
   } else {
     document.body.classList.remove("dark-theme");
   }
-  uiSwitch.innerHTML = isDarkMode
-    ? "<i class='bx bx-sun'></i>Light Mode"
-    : "<i class='bx bx-moon'></i>Dark Mode";
+  changeUIicon(theme);
 }
-// Load dark mode preference on page load
-loadDarkMode();
-// Add event listener to the switch button
-uiSwitch.addEventListener("click", toggleDarkMode);
+
+function changeUIicon(theme) {
+  if (theme === "dark") {
+    darkModeBtns.forEach((btn) => {
+      btn.style.display = "none";
+    });
+    lightModeBtns.forEach((btn) => {
+      btn.style.display = "flex";
+    });
+  } else {
+    darkModeBtns.forEach((btn) => {
+      btn.style.display = "flex";
+    });
+    lightModeBtns.forEach((btn) => {
+      btn.style.display = "none";
+    });
+  }
+}
+
+window.addEventListener("load", loadTheme);
+
+function openMenu() {
+  overlay.style.display = "flex";
+  overlay.onclick = closeMenu;
+}
+
+function closeMenu() {
+  overlay.style.display = "none";
+}
+
+menuBtn.onclick = openMenu;

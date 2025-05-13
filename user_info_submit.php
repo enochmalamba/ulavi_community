@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once('includes/config.php');
-require_once('includes/sanitize.php');
+require_once('includes/functions.php');
 
 
 $user_id = $_SESSION['user_id'];
