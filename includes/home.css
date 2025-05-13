@@ -20,6 +20,20 @@
   margin-top: 5px;
   color: var(--accent);
 }
+.create_post {
+  z-index: 21;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: min(800px, 95%);
+  height: 90vh;
+  padding: 20px;
+  background: var(--card-bg);
+  border-radius: 4px;
+  overflow: hidden;
+  overflow-y: auto;
+}
 
 .create_post form {
   display: flex;

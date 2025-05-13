@@ -1,4 +1,5 @@
 const overlay = document.getElementById("overlay");
+const createPostBtn = document.getElementById("create-post-btn");
 const lightModeBtns = document.querySelectorAll(".light-mode");
 const darkModeBtns = document.querySelectorAll(".dark-mode");
 const menuContainer = document.getElementById("menu");
@@ -52,13 +53,17 @@ function changeUIicon(theme) {
 
 window.addEventListener("load", loadTheme);
 
-function openMenu() {
+createPostBtn.addEventListener("click", () => {
   overlay.style.display = "flex";
-  overlay.onclick = closeMenu;
-}
+});
 
-function closeMenu() {
-  overlay.style.display = "none";
-}
+// function openMenu() {
+//   overlay.style.display = "flex";
+//   // overlay.addEventListener("click", closeMenu);
+// }
 
-menuBtn.onclick = openMenu;
+// function closeMenu() {
+//   overlay.style.display = "none";
+// }
+
+// menuBtn.onclick = openMenu;
