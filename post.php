@@ -210,7 +210,7 @@ if (isset($_GET['post_id']) && is_numeric($_GET['post_id'])) {
                     </div>
                 </div>
                 <div class="comments-container">
-                    <form action="add_comment.php" method="post">
+                    <form action="includes/backend/add_comment.php" method="post">
                         <input type="hidden" name="postID" value="<?php echo htmlspecialchars($postID); ?>"> <textarea name="comment" id="comment" required placeholder="Add comment"></textarea>
                         <div class="form-btns">
                             <button type="submit" name="submit_comment">Comment</button>

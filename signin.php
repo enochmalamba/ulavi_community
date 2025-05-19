@@ -30,7 +30,7 @@
                </ul>
            </div>
            <div class="auth-form">
-               <form action="auth.php" method="post">
+               <form action="includes/backend/auth.php" method="post">
                    <h2>Sign in</h2>
                    <label for="email">Enter email</label>
                    <input

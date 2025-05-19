@@ -16,7 +16,7 @@ if (!isset($_SESSION['user_id'])) {
 </head>
 
 <body>
-    <form action="user_info_submit.php" method="POST" enctype="multipart/form-data" class="form">
+    <form action="includes/backend/user_info_submit.php" method="POST" enctype="multipart/form-data" class="form">
         <div class="info">
             <h2 class="title">Your spotlight awaits! ✨</h2>
             <p> Let's highlight your unique awesomeness and make your presence unforgettable!</p>

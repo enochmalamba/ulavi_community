@@ -49,7 +49,7 @@ if (!isset($_SESSION['user_id'])) {
                 </ul>
             </nav>
             <div class="feed">
-                <form action="post_submit.php" method="post" enctype="multipart/form-data">
+                <form action="includes/backend/post_submit.php" method="post" enctype="multipart/form-data">
                     <label for="title">Enter post title <span>*</span></label>
                     <input type="text" name="title" id="title" placeholder="Write an attention-grabbing headline..." required>
 

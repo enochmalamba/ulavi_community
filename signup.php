@@ -53,7 +53,8 @@ session_start();
 
         </div>
         <div class="auth-form">
-            <form action="auth.php" method="post">
+            <form action="includes/backend/auth.php" method="post">
+
                 <h2>Sign up</h2>
                 <label for="username">Enter username</label>
                 <input
