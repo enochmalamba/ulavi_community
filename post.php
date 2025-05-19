@@ -146,7 +146,7 @@ if (isset($_GET['post_id']) && is_numeric($_GET['post_id'])) {
                     <li><a href=""><i class="bx bx-sun"></i>Light mode</a></li>
                     <li><a href=""><i class='bx bx-log-out'></i>Log out</a></li>
 
-                    <li><a href="user/profile.php"><i class='bx bx-user'></i>Profile</a></li>
+                    <li><a href="user/user.php"><i class='bx bx-user'></i>Profile</a></li>
                 </ul>
             </nav>
             <div class="feed">
@@ -155,10 +155,21 @@ if (isset($_GET['post_id']) && is_numeric($_GET['post_id'])) {
                         <div class="post-details">
                             <div class="img"></div>
 
-                            <div class="post-author">
-                                <h4 class="pa-name"><?php echo htmlspecialchars($postAuthor['username']); ?> </h4>
-                                <small><?php echo htmlspecialchars($postAuthorInfo['user_role']); ?> &bull; <?php echo htmlspecialchars($post['created_at']); ?></small>
-                            </div>
+                            <a href="profile.php?user_id=<?php echo $post['author']['id']; ?>">
+                                <div class="post-details">
+                                    <img
+                                        src="<?php echo htmlspecialchars($post['author']['profile_photo']); ?>"
+                                        alt="<?php echo htmlspecialchars($post['author']['name']); ?>"
+                                        loading="lazy"
+                                        class="img" />
+                                    <div class="post-author">
+
+                                        <h4 class="pa-name"><?php echo htmlspecialchars($post['author']['name']); ?> </h4>
+
+                                        <small><!--<?php echo htmlspecialchars($post['author']['user_role']); ?> &bull;--> <?php echo format_time(strtotime($post['date'])); ?></small>
+                                    </div>
+                                </div>
+                            </a>
 
                         </div>
                         <div class="post-category">

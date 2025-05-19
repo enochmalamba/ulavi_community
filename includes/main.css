@@ -39,7 +39,7 @@
   text-decoration: none;
   position: relative;
   scroll-behavior: smooth;
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
 }
 html {
   font-size: 16px;

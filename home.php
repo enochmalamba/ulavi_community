@@ -187,7 +187,7 @@ $conn->close();
                         </span>
                     </div>
                     <div class="form-btns">
-                        <button type="reset">Cancel</button>
+                        <button type="reset" id="cancel_post">Cancel</button>
                         <button type="submit" name="create_post">Publish Post</button>
                     </div>
 
@@ -207,7 +207,7 @@ $conn->close();
                 <span><i class='bx bx-search'></i></span>
                 <span class="light-mode"><i class="bx bx-sun"></i></span>
                 <span class="dark-mode"><i class="bx bx-moon"></i></span>
-                <a href="profile.php"><i class="bx bx-user"></i></a>
+                <a href="user.php"><i class="bx bx-user"></i></a>
 
             </div>
         </div>
@@ -237,7 +237,7 @@ $conn->close();
                     </li>
                     <li><a href=""><i class='bx bx-log-out'></i>Log out</a></li>
 
-                    <li><a href="profile.php"><i class='bx bx-user'></i><?php echo htmlspecialchars($_SESSION['username']) ?></a></li>
+                    <li><a href="user.php"><i class='bx bx-user'></i><?php echo htmlspecialchars($_SESSION['username']) ?></a></li>
                 </ul>
             </nav>
             <div class="feed">
@@ -264,17 +264,21 @@ $conn->close();
                     <?php foreach ($postsArray as $post): ?>
                         <div class="post">
                             <div class="post-header">
-                                <div class="post-details">
-                                    <img
-                                        src="<?php echo htmlspecialchars($post['author']['profile_photo']); ?>"
-                                        alt="<?php echo htmlspecialchars($post['author']['name']); ?>"
-                                        loading="lazy"
-                                        class="img" />
-                                    <div class="post-author">
-                                        <h4 class="pa-name"><?php echo htmlspecialchars($post['author']['name']); ?> </h4>
-                                        <small><!--<?php echo htmlspecialchars($post['author']['user_role']); ?> &bull;--> <?php echo format_time(strtotime($post['date'])); ?></small>
+                                <a href="profile.php?user_id=<?php echo $post['author']['id']; ?>">
+                                    <div class="post-details">
+                                        <img
+                                            src="<?php echo htmlspecialchars($post['author']['profile_photo']); ?>"
+                                            alt="<?php echo htmlspecialchars($post['author']['name']); ?>"
+                                            loading="lazy"
+                                            class="img" />
+                                        <div class="post-author">
+
+                                            <h4 class="pa-name"><?php echo htmlspecialchars($post['author']['name']); ?> </h4>
+
+                                            <small><!--<?php echo htmlspecialchars($post['author']['user_role']); ?> &bull;--> <?php echo format_time(strtotime($post['date'])); ?></small>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                                 <!-- <div class="post-category" >
                                     <a href="">
                                         <span class="material-symbols-outlined"><?php echo htmlspecialchars($categoryIcon); ?></span> <?php echo htmlspecialchars($category); ?>

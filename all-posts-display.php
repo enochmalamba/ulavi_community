@@ -125,7 +125,7 @@ $result->free();
                 <ul class="user-nav">
                     <li><a href=""><i class="bx bx-sun"></i>Light mode</a></li>
                     <li><a href=""><i class='bx bx-log-out'></i>Log out</a></li>
-                    <li><a href="user/profile.php"><i class='bx bx-user'></i>Profile</a></li>
+                    <li><a href="user/user.php"><i class='bx bx-user'></i>Profile</a></li>
                 </ul>
             </nav>
             <div class="feed">

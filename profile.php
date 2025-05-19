@@ -3,21 +3,32 @@
 session_start();
 include_once('includes/config.php');
 
-// Check if the user is logged in
-if (!isset($_SESSION['user_id'])) {
-    header("Location: signin.php");
-    exit();
+if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
+    $user_id = intval($_GET['user_id']);
 }
 
-$user_id = $_SESSION['user_id'];
-$username = $_SESSION['username'];
-$email = $_SESSION['email'];
 
+// $user_id = $_SESSION['user_id'];
+// $username = $_SESSION['username'];
+// $email = $_SESSION['email'];
+$username = "";
+$email = "";
 $user_role = "";
 $bio = "";
 $location = "";
 
-//fetch data from the database
+//fetch user data from the community_people table
+$stmt = $conn->prepare("SELECT username, email FROM community_people WHERE user_id = ?");
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+if ($result->num_rows > 0) {
+    $user_info = $result->fetch_assoc();
+    $username = $user_info['username'];
+    $email = $user_info['email'];
+}
+
+//fetch profile data from the user_profile table
 $stmt = $conn->prepare("SELECT bio, user_role, user_location, profile_photo FROM user_profile WHERE user_id = ?");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
@@ -84,7 +95,7 @@ if ($result->num_rows > 0) {
                     <li><a href=""><i class="bx bx-sun"></i>Light mode</a></li>
                     <li><a href=""><i class='bx bx-log-out'></i>Log out</a></li>
 
-                    <li><a href="user/profile.php"><i class='bx bx-user'></i>Profile</a></li>
+                    <li><a href="user/user.php"><i class='bx bx-user'></i>Profile</a></li>
                 </ul>
             </nav>
             <div class="feed">
