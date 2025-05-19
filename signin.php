@@ -8,8 +8,8 @@
        <meta charset="UTF-8">
        <meta name="viewport" content="width=device-width, initial-scale=1.0">
        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-       <link rel="stylesheet" href="includes/auth.css">
-       <link rel="stylesheet" href="includes/main.css">
+       <link rel="stylesheet" href="includes/styles/auth.css">
+       <link rel="stylesheet" href="includes/styles/main.css">
        <title>Signup - ULAVi Community</title>
    </head>
 

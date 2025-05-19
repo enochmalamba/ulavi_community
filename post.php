@@ -114,8 +114,8 @@ if (isset($_GET['post_id']) && is_numeric($_GET['post_id'])) {
     </style>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material%20Symbols%20Outlined" />
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="includes/main.css">
-    <link rel="stylesheet" href="includes/home.css">
+    <link rel="stylesheet" href="includes/styles/main.css">
+    <link rel="stylesheet" href="includes/styles/home.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($post['title']); ?> &bull; ULAVi Community</title>
 </head>

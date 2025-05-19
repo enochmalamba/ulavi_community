@@ -39,6 +39,7 @@ if ($result->num_rows > 0) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="includes/styles/main.css">
     <title>Account Settings</title>
 </head>
 
