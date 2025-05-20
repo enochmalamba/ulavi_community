@@ -216,7 +216,7 @@ require 'includes/backend/fetch_data.php'
         </div>
 
     </main>
-    <script src="includes/main.js"></script>
+    <script src="includes/js/main.js"></script>
 </body>
 
 </html>

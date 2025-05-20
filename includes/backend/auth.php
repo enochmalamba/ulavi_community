@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once('includes/config.php');
+include_once('config.php');
 
 if (isset($_POST['signup'])) {
     $username = $_POST['username'];
@@ -34,7 +34,7 @@ if (isset($_POST['signup'])) {
 
         $stmt->close();
         unset($_SESSION['email_error']);
-        header("Location: user_info1.php");
+        header("Location: ../../user_info1.php");
         exit();
     }
 }
@@ -56,15 +56,15 @@ if (isset($_POST['signin'])) {
                 $_SESSION['username'] = $userdata['username'];
                 $_SESSION['email'] = $userdata['email'];
                 unset($_SESSION['signin_error']);
-                header("Location: home.php");
+                header("Location: ../../home.php");
                 exit();
             } else {
                 $_SESSION['signin_error'] = "Invalid password";
-                header("Location: signin.php");
+                header("Location: ../../signin.php");
             }
         } else {
             $_SESSION['signin_error'] = "Email not found";
-            header("Location: signin.php");
+            header("Location: ../../signin.php");
         }
     }
 }
