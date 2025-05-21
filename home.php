@@ -24,12 +24,6 @@ require 'includes/backend/fetch_data.php'
 </head>
 
 <body>
-    <div class="log-out" style="display: none;">
-        <form action="home.php" method="post">
-            <button type="submit" name="logout">Log Out</button>
-        </form>
-
-    </div>
     <main>
         <div class="overlay" id="overlay">
             <div id="create_post" class="create_post">
@@ -99,7 +93,7 @@ require 'includes/backend/fetch_data.php'
                         <span class="nav-btn light-mode"><i class="bx bx-sun"></i>Light mode</span>
                         <span class="nav-btn dark-mode"><i class="bx bx-moon"></i>Dark mode</span>
                     </li>
-                    <li><a href=""><i class='bx bx-log-out'></i>Log out</a></li>
+                    <li id="logout-btn"><span class="nav-btn"><i class='bx bx-log-out'></i>Log out</span></li>
 
                     <li><a href="user.php"><i class='bx bx-user'></i><?php echo htmlspecialchars($_SESSION['username']) ?></a></li>
                 </ul>
@@ -216,6 +210,7 @@ require 'includes/backend/fetch_data.php'
         </div>
 
     </main>
+    <script src="includes/js/modals.js"></script>
     <script src="includes/js/main.js"></script>
 </body>
 

@@ -1,9 +1,10 @@
+// import { logOutModal } from "./modals.js";
+// This file contains the JavaScript code for the main functionality of the web application.
 const overlay = document.getElementById("overlay");
 const createPostBtn = document.getElementById("create-post-btn");
 const lightModeBtns = document.querySelectorAll(".light-mode");
 const darkModeBtns = document.querySelectorAll(".dark-mode");
-const menuContainer = document.getElementById("menu");
-const menuBtn = document.getElementById("menu-btn");
+const logoutBtn = document.getElementById("logout-btn");
 
 const previewContainer = document.querySelector(".upload-img-preview");
 const imgInput = document.getElementById("post_image");
@@ -103,4 +104,9 @@ imgPreviewClose.addEventListener("click", function () {
   imgPreviewClose.style.display = "none";
   previewContainer.style.display = "none";
   imgInput.value = "";
+});
+
+logoutBtn.addEventListener("click", () => {
+  overlay.innerHTML = logOutModal();
+  overlay.style.display = "flex";
 });
