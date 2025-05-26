@@ -198,13 +198,13 @@ require 'includes/backend/fetch_data.php'
                             mode_heat
                         </span>Today's top artist</h2>
                     <h4>OG Stakks</h4>
-                    <img src="stakks.jpg" alt="">
+                    <img src="includes/images/stakks.jpg" alt="">
                 </div>
                 <div class="card">
                     <h2 class="title sml" style="font-size: 15px;"><span class="material-symbols-outlined" style="font-size: 20px;">
                             ad
                         </span>Ad</h2>
-                    <img src="ad.jpeg" alt="">
+                    <img src="includes/images/ad.jpeg" alt="">
                 </div>
             </div>
         </div>

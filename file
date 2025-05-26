@@ -17,7 +17,7 @@
 </form>
 
 <?php
-include_once('includes/config.php');
+include_once('includes/backend/config.php');
 if (isset($_POST['update_profile'])) {
 
   $bio = $_POST['bio'];

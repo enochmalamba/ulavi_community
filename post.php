@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'includes/config.php';
+require 'includes/backend/config.php';
 
 if (isset($_GET['post_id']) && is_numeric($_GET['post_id'])) {
     $postID = intval($_GET['post_id']);

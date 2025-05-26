@@ -1,7 +1,7 @@
 <?php
 // Start the session
 session_start();
-include_once('includes/config.php');
+include_once('includes/backend/config.php');
 
 if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
     $user_id = intval($_GET['user_id']);

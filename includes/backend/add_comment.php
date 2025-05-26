@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once 'includes/config.php';
-require_once 'includes/functions.php';
+require_once 'includes/backend/config.php';
+require_once 'includes/includes/backend/functions.php';
 
 if (isset($_POST['submit_comment'])) {
     $comment = sanitize_input($_POST['comment']);

@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once('includes/config.php');
-require_once('includes/functions.php');
+require_once('includes/backend/config.php');
+require_once('includes/backend/functions.php');
 
 
 $user_id = $_SESSION['user_id'];

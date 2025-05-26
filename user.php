@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'includes/config.php';
+require_once 'includes/backend/config.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: signin.php");
@@ -73,12 +73,7 @@ if ($result->num_rows > 0) {
             </div>
 
             <button type="submit" name="update_profile">Update Profile</button>
-            <?php
-            $bio = $_POST['bio'];
-            if (isset($_POST['update_profile'])) {
-                echo $bio;
-            }
-            ?>
+          
         </form>
     </div>
 
