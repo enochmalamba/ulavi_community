@@ -1,6 +1,5 @@
-// import { logOutModal } from "./modals.js";
-// This file contains the JavaScript code for the main functionality of the web application.
 const overlay = document.getElementById("overlay");
+const modalContainer = document.getElementById("modal-container");
 const createPostBtn = document.getElementById("create-post-btn");
 const lightModeBtns = document.querySelectorAll(".light-mode");
 const darkModeBtns = document.querySelectorAll(".dark-mode");
@@ -60,53 +59,23 @@ function changeUIicon(theme) {
 
 window.addEventListener("load", loadTheme);
 
-createPostBtn.addEventListener("click", () => {
+//start modal functionality
+function openModal(modalGeneratorFn) {
   overlay.style.display = "flex";
-});
-cancelPostBtn.addEventListener("click", () => {
+  overlay.onclick = closeModals;
+  const modal = modalGeneratorFn();
+  modalContainer.innerHTML = modal;
+  modalContainer.style.display = "flex";
+  const cancelModalBtn = document.getElementById("cancel-modal-btn");
+  cancelModalBtn.onclick = closeModals;
+}
+
+function closeModals() {
   overlay.style.display = "none";
-  imgPreview.src = "";
-  imgPreview.style.display = "none";
-  imgPreviewClose.style.display = "none";
-  previewContainer.style.display = "none";
-  imgInput.value = "";
-});
+  modalContainer.style.display = "none";
+  modalContainer.innerHTML = "";
+}
 
-// function openMenu() {
-//   overlay.style.display = "flex";
-//   // overlay.addEventListener("click", closeMenu);
-// }
-
-// function closeMenu() {
-//   overlay.style.display = "none";
-// }
-
-// menuBtn.onclick = openMenu;
-
-previewContainer.style.display = "none";
-imgInput.addEventListener("change", function () {
-  const file = this.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      imgPreview.src = e.target.result;
-      imgPreview.style.display = "block";
-      imgPreviewClose.style.display = "block";
-      previewContainer.style.display = "flex";
-    };
-    reader.readAsDataURL(file);
-  }
-});
-
-imgPreviewClose.addEventListener("click", function () {
-  imgPreview.src = "";
-  imgPreview.style.display = "none";
-  imgPreviewClose.style.display = "none";
-  previewContainer.style.display = "none";
-  imgInput.value = "";
-});
-
-logoutBtn.addEventListener("click", () => {
-  overlay.innerHTML = logOutModal();
-  overlay.style.display = "flex";
-});
+logoutBtn.onclick = () => {
+  openModal(logOutModal);
+};

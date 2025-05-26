@@ -4,7 +4,7 @@ const formGenerator = (label, inputName, type, value) => {
     <div class="form-group">
         <label for="${inputName}">${label}</label>
         <input type="${type}" class="form-control" id="${inputName}" name="${inputName}" value="${value}">
-        <input type="reset" value="Cancel"  name="reset_${inputName}">
+        <input type="reset" value="Cancel" id="cancel-modal-btn"  name="reset_${inputName}">
         <input type="submit"  value="Submit" name="edit_${inputName}">
     </div>`;
   document.getElementById("form").innerHTML = formHTML;
@@ -15,7 +15,7 @@ const textareaGenerator = (label, inputName, value) => {
     <div class="form-group">
         <label for="${inputName}">${label}</label>
         <textarea class="form-control" id="${inputName}" name="${inputName}">${value}</textarea>
-        <input type="reset" value="Cancel"  name="reset_${inputName}">
+        <input type="reset" value="Cancel" id="cancel-modal-btn"  name="reset_${inputName}">
         <input type="submit"  value="Submit" name="edit_${inputName}">
     </div>`;
   document.getElementById("form").innerHTML = formHTML;
@@ -26,21 +26,19 @@ const profilePhotoUpload = () => {
     <div class="form-group">
         <label for="profile_photo">Upload Profile Photo</label>
         <input type="file" class="form-control" id="profile_photo" name="profile_photo">
-        <input type="reset" value="Cancel"  name="reset_profile_photo">
+        <input type="reset" value="Cancel" id="cancel-modal-btn"  name="reset_profile_photo">
         <input type="submit"  value="Upload" name="upload_profile_photo">
     </div>`;
   document.getElementById("form").innerHTML = formHTML;
 };
 
 const logOutModal = () => {
-  formHTML = `
-    <div class="form-group">
+  return (formHTML = `
+    <form class="modal-form" method="post" action="includes/backend/auth.php">
         <p>Are you sure you want to log out?</p>
-        <input type="reset" value="Cancel"  name="reset_log_out">
-        <input type="submit"  value="Log out" name="log_out">
-    </div>`;
-  // document.getElementById("form").innerHTML = formHTML;
-  return formHTML;
+        <input type="reset" value="Cancel" id="cancel-modal-btn"  name="reset_log_out">
+        <input type="submit"  value="Yes" name="logout">
+    </form>`);
 };
 
 const createPostModal = () => {

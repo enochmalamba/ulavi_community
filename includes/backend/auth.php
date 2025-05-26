@@ -68,3 +68,9 @@ if (isset($_POST['signin'])) {
         }
     }
 }
+
+if (isset($_POST['logout'])) {
+    session_destroy();
+    header("Location: ../../signin.php");
+    exit();
+}

@@ -25,32 +25,8 @@ require 'includes/backend/fetch_data.php'
 
 <body>
     <main>
-        <div class="overlay" id="overlay">
-            <div id="create_post" class="create_post">
-                <form action="post_submit.php" method="post" enctype="multipart/form-data">
-                    <label for="title">Enter post title <span>*</span></label>
-                    <input type="text" name="title" id="title" placeholder="Write an attention-grabbing headline..." required>
-
-                    <label for="content">Enter post content <span>*</span></label>
-                    <textarea name="content" id="content" placeholder="Share your thoughts, ideas, or story in detail..." required></textarea>
-
-                    <label for="post_image">Upload with an image (Optional)</label>
-                    <input type="file" name="post_image" id="post_image" accept="image/*">
-                    <div class="upload-img-preview">
-                        <img src="" alt="Image preview" id="img-preview">
-                        <span class="material-symbols-outlined" id="img-preview-close">
-                            close
-                        </span>
-                    </div>
-                    <div class="form-btns">
-                        <button type="reset" id="cancel_post">Cancel</button>
-                        <button type="submit" name="create_post">Publish Post</button>
-                    </div>
-
-                </form>
-            </div>
-        </div>
-
+        <div class="overlay" id="overlay"></div>
+        <div class="modal-container" id="modal-container"></div>
 
         <div class="header">
             <a href="home.php" class="title sml logo"> <i class='bx bxs-palette'></i> <span>ulavi <br> community</span></a>
@@ -210,8 +186,8 @@ require 'includes/backend/fetch_data.php'
         </div>
 
     </main>
-    <script src="includes/js/modals.js"></script>
     <script src="includes/js/main.js"></script>
+    <script src="includes/js/modals.js"></script>
 </body>
 
 </html>

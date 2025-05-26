@@ -82,6 +82,27 @@ body {
   display: none;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+}
+.modal-container {
+  z-index: 21;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  width: auto;
+  height: auto;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: white;
+}
+
+.modal-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 5px;
 }
 main {
   position: relative;
