@@ -1,147 +1,118 @@
 <?php
 session_start();
-require_once 'includes/backend/config.php';
+// require 'includes/backend/fetch_data.php'
+$profilePhoto = 'https://i.pinimg.com/736x/59/28/63/592863045173070313c50f1dd9b5ff78.jpg';
+$username = $_SESSION['username'];
+$title = 'ULV Memmber';
 
-if (!isset($_SESSION['user_id'])) {
-    header("Location: signin.php");
-    exit();
-}
-$stmt = $conn->prepare("SELECT username, email  FROM community_people WHERE user_id = ?");
-$stmt->bind_param("i", $_SESSION['user_id']);
-$stmt->execute();
-$result = $stmt->get_result();
-if ($result->num_rows > 0) {
-    $user_info = $result->fetch_assoc();
-    $username = $user_info['username'];
-    $email = $user_info['email'];
-
-    //get the user bio , location, dob, user_title
-    $stmt = $conn->prepare("SELECT bio, user_location, dob, user_title FROM user_profile WHERE user_id = ?");
-    $stmt->bind_param("i", $_SESSION['user_id']);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        $user_info = $result->fetch_assoc();
-        $bio = $user_info['bio'];
-        $location = $user_info['user_location'];
-        $dob = $user_info['dob'];
-        $user_title = $user_info['user_title'];
-    }
-} else {
-    header("Location: signin.php");
-    exit();
-}
-
+$bio = 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi cupiditate est explicabo voluptas laborum dolore veniam, eum facere earum, autem possimus assumenda ipsum deleniti laboriosam doloribus non ea quis aliquam?'
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
+<!-- to do: remove the console logging  -->
+<script>
+    const phpArray = <?php echo json_encode($postsArray); ?>;
+    console.log('PHP Array:', phpArray);
+</script>
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material%20Symbols%20Outlined" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="includes/styles/main.css">
-    <title>Account Settings</title>
+    <link rel="stylesheet" href="includes/styles/home.css">
+    <link rel="stylesheet" href="includes/styles/profile.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
 </head>
 
 <body>
-    <div>
-        <button onclick="showForm('profileForm')">Profile Settings</button>
-        <button onclick="showForm('securityForm')">Security Settings</button>
-    </div>
+    <main>
+        <div class="overlay" id="overlay"></div>
+        <div class="modal-container" id="modal-container"></div>
 
-    <div id="profileForm" class="form-container">
-        <h1>Profile Settings</h1>
-        <form action="user.php" method="post">
-            <div>
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" value="<?php echo $username; ?>">
+        <div class="header">
+            <a href="home.php" class="title sml logo"> <i class='bx bxs-palette'></i> <span>ulavi <br> community</span></a>
+            <h2 class="current-page title sml ">Home</h2>
+            <form class="search-bar">
+                <input type="text" name="query" placeholder="Search..">
+                <button type="submit"><i class='bx bx-search'></i></button>
+            </form>
+            <div class="mobile-nav">
+                <span><i class='bx bx-search'></i></span>
+                <span class="light-mode"><i class="bx bx-sun"></i></span>
+                <span class="dark-mode"><i class="bx bx-moon"></i></span>
+                <a href="user.php"><i class="bx bx-user"></i></a>
+
             </div>
+        </div>
+        <div class="container">
+            <nav class="navigation">
+                <ul class="page-nav">
+                    <li><a href="" class="active"><i class='bx bxs-home-alt-2'></i>
+                            <div>Home</div>
+                        </a></li>
+                    <li><a href=""><i class='bx bx-group'></i>
+                            <div>Community</div>
+                        </a></li>
+                    <li id="create-post-btn">
+                        <span class="nav-btn"> <i class='bx bx-border-circle bx-plus'></i>
+                            <div>Post</div>
+                        </span>
+                    </li>
+                    <li><a href=""><i class='material-symbols-outlined'>person_play</i>
+                            <div>Local talents</div>
+                        </a></li>
+                    <li id="menu-btn"><span class="nav-btn"><i class='bx bx-menu'></i>
+                            <div>More</div>
+                        </span></li>
+                </ul>
+                <ul class="user-nav">
+                    <li>
+                        <span class="nav-btn light-mode"><i class="bx bx-sun"></i>Light mode</span>
+                        <span class="nav-btn dark-mode"><i class="bx bx-moon"></i>Dark mode</span>
+                    </li>
+                    <li id="logout-btn"><span class="nav-btn"><i class='bx bx-log-out'></i>Log out</span></li>
 
-            <div>
-                <label for="bio">Bio:</label>
-                <textarea id="bio" name="bio" rows="4"><?php echo $bio; ?></textarea>
-            </div>
+                    <li><a href="user.php"><i class='bx bx-user'></i><?php echo htmlspecialchars($_SESSION['username']) ?></a></li>
+                </ul>
+            </nav>
+            <div class="feed">
+                <div class="profile-view">
+                    <div class="profile-header">
+                        <img src="<?php echo htmlspecialchars($profilePhoto); ?>" alt="<?php echo htmlspecialchars($username); ?>" class="profile-img" style="display: none;">
+                        <div class="profile-details">
+                            <img src="<?php echo htmlspecialchars($profilePhoto); ?>" alt="<?php echo htmlspecialchars($username); ?>">
+                            <h3 class="title sml"><?php echo htmlspecialchars($username); ?></h3>
+                            <p><?php echo htmlspecialchars($title); ?></p>
+                            <p class="bio"><?php echo htmlspecialchars($bio); ?></p>
+                        </div>
+                    </div>
 
-            <div>
-                <label for="profilePic">Profile Picture:</label>
-                <input type="file" id="profilePic" name="profilePic" accept="image/*">
-
-                <div id="imagePreviewContainer" style="display: none;">
-                    <p>Preview:</p>
-                    <img id="imagePreview" src="#" alt="Profile picture preview" style="max-width: 200px; max-height: 200px;">
                 </div>
             </div>
-
-            <button type="submit" name="update_profile">Update Profile</button>
-          
-        </form>
-    </div>
-
-    <div id="securityForm" class="form-container" style="display: none;">
-        <h1>Security Settings</h1>
-        <form>
-            <div>
-                <label for="email">New Email:</label>
-                <input type="email" id="email" name="email" value="<?php echo $email; ?>">
+            <div class="right-sidebar">
+                <div class="card">
+                    <h2 class="title sml"><span class="material-symbols-outlined">
+                            mode_heat
+                        </span>Today's top artist</h2>
+                    <h4>OG Stakks</h4>
+                    <img src="includes/images/stakks.jpg" alt="">
+                </div>
+                <div class="card">
+                    <h2 class="title sml" style="font-size: 15px;"><span class="material-symbols-outlined" style="font-size: 20px;">
+                            ad
+                        </span>Ad</h2>
+                    <img src="includes/images/ad.jpeg" alt="">
+                </div>
             </div>
+        </div>
 
-            <div>
-                <label for="currentPassword">Current Password:</label>
-                <input type="password" id="currentPassword" name="currentPassword">
-            </div>
-
-            <div>
-                <label for="newPassword">New Password:</label>
-                <input type="password" id="newPassword" name="newPassword">
-            </div>
-
-            <div>
-                <label for="confirmPassword">Confirm New Password:</label>
-                <input type="password" id="confirmPassword" name="confirmPassword">
-            </div>
-
-            <button type="submit">Update Security Settings</button>
-        </form>
-    </div>
-
-    <script>
-        // Function to show one form and hide the other
-        function showForm(formId) {
-            // Hide all forms
-            document.querySelectorAll('.form-container').forEach(form => {
-                form.style.display = 'none';
-            });
-
-            // Show the selected form
-            document.getElementById(formId).style.display = 'block';
-        }
-
-        // Image preview functionality
-        document.getElementById('profilePic').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            const preview = document.getElementById('imagePreview');
-            const previewContainer = document.getElementById('imagePreviewContainer');
-
-            if (file) {
-                const reader = new FileReader();
-
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                    previewContainer.style.display = 'block';
-                }
-
-                reader.readAsDataURL(file);
-            } else {
-                preview.src = "#";
-                previewContainer.style.display = 'none';
-            }
-        });
-
-        // Show profile form by default when page loads
-        window.onload = function() {
-            showForm('profileForm');
-        };
-    </script>
+    </main>
+    <script src="includes/js/main.js"></script>
+    <script src="includes/js/modals.js"></script>
 </body>
 
 </html>
