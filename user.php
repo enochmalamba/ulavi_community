@@ -9,6 +9,7 @@ $profilePic = "https://i.pinimg.com/736x/ae/25/58/ae25588122b4e9efaf260c6e1ea846
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material%20Symbols%20Outlined" />
@@ -41,7 +42,7 @@ $profilePic = "https://i.pinimg.com/736x/ae/25/58/ae25588122b4e9efaf260c6e1ea846
         <div class="container">
             <nav class="navigation">
                 <ul class="page-nav">
-                    <li><a href="" ><i class='bx bxs-home-alt-2'></i>
+                    <li><a href=""><i class='bx bxs-home-alt-2'></i>
                             <div>Home</div>
                         </a></li>
                     <li><a href=""><i class='bx bx-group'></i>
@@ -69,24 +70,23 @@ $profilePic = "https://i.pinimg.com/736x/ae/25/58/ae25588122b4e9efaf260c6e1ea846
                     <li><a href="user.php" class="active"><i class='bx bx-user'></i><?php echo htmlspecialchars($_SESSION['username']) ?></a></li>
                 </ul>
             </nav>
-        <div class="feed">
-            <div class="profile">
+            <div class="feed">
+                <div class="profile">
                     <img src="<?php echo $profilePic ?>" alt="<?php echo htmlspecialchars($_SESSION['username']) ?>">
                     <h2 class="title sml"> <?php echo htmlspecialchars($_SESSION['username']) ?> </h2>
-                    <h4> <?php echo htmlspecialchars($_SESSION['email']) ?> </h4>      
-                        <button><i class='bx  bx-edit'></i>  Edit Profile</button>
+                    <h4> <?php echo htmlspecialchars($_SESSION['email']) ?> </h4>
+                    <button><i class='bx  bx-edit'></i> Edit Profile</button>
                 </div>
-            <div class="profile-nav">
-                <button>Activity</button>
-          
-                <button>Settings</button>
+                <div class="profile-nav">
+                    <button>Activity</button>
+                    <button>Settings</button>
+                </div>
+
+
+
+
+
             </div>
-           
-                
-     
-
-
-        </div>
             <div class="right-sidebar">
                 <div class="card">
                     <h2 class="title sml"><span class="material-symbols-outlined">
