@@ -1,31 +1,22 @@
 <?php
 session_start();
-// require 'includes/backend/fetch_data.php'
-$profilePhoto = 'https://i.pinimg.com/736x/59/28/63/592863045173070313c50f1dd9b5ff78.jpg';
-$username = $_SESSION['username'];
-$title = 'ULV Memmber';
+require 'includes/backend/fetch_data.php';
+//fake profile pic for now
+$profilePic = "https://i.pinimg.com/736x/ae/25/58/ae25588122b4e9efaf260c6e1ea84641.jpg";
 
-$bio = 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi cupiditate est explicabo voluptas laborum dolore veniam, eum facere earum, autem possimus assumenda ipsum deleniti laboriosam doloribus non ea quis aliquam?'
 ?>
 
 
 <!DOCTYPE html>
 <html lang="en">
-<!-- to do: remove the console logging  -->
-<script>
-    const phpArray = <?php echo json_encode($postsArray); ?>;
-    console.log('PHP Array:', phpArray);
-</script>
-
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material%20Symbols%20Outlined" />
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="includes/styles/main.css">
     <link rel="stylesheet" href="includes/styles/home.css">
-    <link rel="stylesheet" href="includes/styles/profile.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title><?php echo htmlspecialchars($_SESSION['username']) ?> | Profile</title>
 </head>
 
 <body>
@@ -35,7 +26,6 @@ $bio = 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi cupidi
 
         <div class="header">
             <a href="home.php" class="title sml logo"> <i class='bx bxs-palette'></i> <span>ulavi <br> community</span></a>
-            <h2 class="current-page title sml ">Home</h2>
             <form class="search-bar">
                 <input type="text" name="query" placeholder="Search..">
                 <button type="submit"><i class='bx bx-search'></i></button>
@@ -51,7 +41,7 @@ $bio = 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi cupidi
         <div class="container">
             <nav class="navigation">
                 <ul class="page-nav">
-                    <li><a href="" class="active"><i class='bx bxs-home-alt-2'></i>
+                    <li><a href="" ><i class='bx bxs-home-alt-2'></i>
                             <div>Home</div>
                         </a></li>
                     <li><a href=""><i class='bx bx-group'></i>
@@ -76,23 +66,27 @@ $bio = 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi cupidi
                     </li>
                     <li id="logout-btn"><span class="nav-btn"><i class='bx bx-log-out'></i>Log out</span></li>
 
-                    <li><a href="user.php"><i class='bx bx-user'></i><?php echo htmlspecialchars($_SESSION['username']) ?></a></li>
+                    <li><a href="user.php" class="active"><i class='bx bx-user'></i><?php echo htmlspecialchars($_SESSION['username']) ?></a></li>
                 </ul>
             </nav>
-            <div class="feed">
-                <div class="profile-view">
-                    <div class="profile-header">
-                        <img src="<?php echo htmlspecialchars($profilePhoto); ?>" alt="<?php echo htmlspecialchars($username); ?>" class="profile-img" style="display: none;">
-                        <div class="profile-details">
-                            <img src="<?php echo htmlspecialchars($profilePhoto); ?>" alt="<?php echo htmlspecialchars($username); ?>">
-                            <h3 class="title sml"><?php echo htmlspecialchars($username); ?></h3>
-                            <p><?php echo htmlspecialchars($title); ?></p>
-                            <p class="bio"><?php echo htmlspecialchars($bio); ?></p>
-                        </div>
-                    </div>
-
+        <div class="feed">
+            <div class="profile">
+                    <img src="<?php echo $profilePic ?>" alt="<?php echo htmlspecialchars($_SESSION['username']) ?>">
+                    <h2 class="title sml"> <?php echo htmlspecialchars($_SESSION['username']) ?> </h2>
+                    <h4> <?php echo htmlspecialchars($_SESSION['email']) ?> </h4>      
+                        <button><i class='bx  bx-edit'></i>  Edit Profile</button>
                 </div>
+            <div class="profile-nav">
+                <button>Activity</button>
+          
+                <button>Settings</button>
             </div>
+           
+                
+     
+
+
+        </div>
             <div class="right-sidebar">
                 <div class="card">
                     <h2 class="title sml"><span class="material-symbols-outlined">
