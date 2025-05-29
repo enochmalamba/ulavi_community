@@ -93,7 +93,14 @@ $profilePic = "https://i.pinimg.com/736x/ae/25/58/ae25588122b4e9efaf260c6e1ea846
                     </button>
                 </div>
                 <div class="user-settings" id="user-settings">
-                    <div class="settings-grp">
+                    <div class="settings-grp edit-profile" id="edit-profile">
+                        <h4>Edit Profile</h4>
+                        <p>Username: <span> <?php echo htmlspecialchars($_SESSION['username']) ?> </span> <i class='bx  bx-edit'></i> </p>
+                        <p>Proffession: <span>Web Developer</span> <i class='bx  bx-edit'></i> </p>
+                        <p>Bio: <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem quae necessitatibus consequatur doloremque non vitae qui fugiat!</span> <i class='bx  bx-edit'></i> </p>
+                        <p>Profile Picture: <span>Change</span> <i class='bx  bx-edit'></i> </p>
+                    </div>
+                    <div class="settings-grp account-settings" id="account-settings">
                         <h4>Account Settings</h4>
                         <p>Email: <span><?php echo htmlspecialchars($_SESSION['email']) ?></span> <i class='bx  bx-edit'></i> </p>
                         <p>Password : <span>**********</span> <i class='bx  bx-edit'></i> </p>
