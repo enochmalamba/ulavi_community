@@ -1,6 +1,12 @@
 <?php
 session_start();
 require 'includes/backend/fetch_data.php';
+$userPosts = array();
+foreach ($postsArray as $post) {
+    if ($post['author']['id'] == $_SESSION['user_id']) {
+        $userPosts[] = $post;
+    }
+}
 //fake profile pic for now
 $profilePic = "https://i.pinimg.com/736x/ae/25/58/ae25588122b4e9efaf260c6e1ea84641.jpg";
 
@@ -42,7 +48,7 @@ $profilePic = "https://i.pinimg.com/736x/ae/25/58/ae25588122b4e9efaf260c6e1ea846
         <div class="container">
             <nav class="navigation">
                 <ul class="page-nav">
-                    <li><a href=""><i class='bx bxs-home-alt-2'></i>
+                    <li><a href="home.php"><i class='bx bxs-home-alt-2'></i>
                             <div>Home</div>
                         </a></li>
                     <li><a href=""><i class='bx bx-group'></i>
@@ -72,16 +78,99 @@ $profilePic = "https://i.pinimg.com/736x/ae/25/58/ae25588122b4e9efaf260c6e1ea846
             </nav>
             <div class="feed">
                 <div class="profile">
-                    <img src="<?php echo $profilePic ?>" alt="<?php echo htmlspecialchars($_SESSION['username']) ?>">
+                    <!-- <img src="<?php echo $profilePic ?>" alt="<?php echo htmlspecialchars($_SESSION['username']) ?>"> -->
                     <h2 class="title sml"> <?php echo htmlspecialchars($_SESSION['username']) ?> </h2>
                     <h4> <?php echo htmlspecialchars($_SESSION['email']) ?> </h4>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem quae necessitatibus consequatur doloremque non vitae qui fugiat!</p>
                     <button><i class='bx  bx-edit'></i> Edit Profile</button>
                 </div>
                 <div class="profile-nav">
-                    <button>Activity</button>
-                    <button>Settings</button>
+                    <button>
+                        <i class='bx  bx-trending-up'></i> Activity
+                    </button>
+                    <button>
+                        <i class='bx  bx-cog'></i> Settings
+                    </button>
                 </div>
+                <div class="user-settings" id="user-settings">
+                    <div class="settings-grp">
+                        <h4>Account Settings</h4>
+                        <p>Email: <span><?php echo htmlspecialchars($_SESSION['email']) ?></span> <i class='bx  bx-edit'></i> </p>
+                        <p>Password : <span>**********</span> <i class='bx  bx-edit'></i> </p>
+                        <p>Location: <span>Lilongwe</span> <i class='bx  bx-edit'></i> </p>
+                        <p>Gender: <span>Male</span> <i class='bx  bx-edit'></i> </p>
 
+                    </div>
+
+                </div>
+                <div class="user-activity" id="user-activity">
+                    <!-- display all user's posts from database -->
+                    <?php foreach ($userPosts as $post) : ?>
+                        <div class="post">
+                            <div class="post-header">
+                                <a href="profile.php?user_id=<?php echo $post['author']['id']; ?>">
+                                    <div class="post-details">
+                                        <img
+                                            src="<?php echo htmlspecialchars($post['author']['profile_photo']); ?>"
+                                            alt="<?php echo htmlspecialchars($post['author']['name']); ?>"
+                                            loading="lazy"
+                                            class="img" />
+                                        <div class="post-author">
+
+                                            <h4 class="pa-name"><?php echo htmlspecialchars($post['author']['name']); ?> </h4>
+
+                                            <small><!--<?php echo htmlspecialchars($post['author']['user_role']); ?> &bull;--> <?php echo format_time(strtotime($post['date'])); ?></small>
+                                        </div>
+                                    </div>
+                                </a>
+                                <!-- <div class="post-category" >
+                                    <a href="">
+                                        <span class="material-symbols-outlined"><?php echo htmlspecialchars($categoryIcon); ?></span> <?php echo htmlspecialchars($category); ?>
+                                    </a>
+                                </div> -->
+                            </div>
+                            <a href="post.php?post_id=<?php echo $post['post_id']; ?>" class="post-link">
+                                <h3 class="post-title title sml"><?php echo $post['title']; ?></h3>
+                                <p class="post-content">
+                                    <?php
+                                    // Show truncated content on the feed
+                                    $truncatedContent = substr($post['content'], 0, 150);
+                                    $suffix = strlen($post['content']) > 150 ? '...<strong>more</strong>' : '';
+                                    echo nl2br(htmlspecialchars($truncatedContent)) . $suffix;
+                                    ?>
+                                </p>
+
+                                <?php if (!empty($post['media_url'])): ?>
+                                    <div class="post-image">
+                                        <img src="<?php echo htmlspecialchars($post['media_url']); ?>" alt="<?php echo htmlspecialchars($post['title']); ?>">
+                                    </div>
+
+
+                                <?php endif; ?>
+                            </a>
+                            <div class="post-interactions">
+                                <ul>
+                                    <li>
+                                        <span class="material-symbols-outlined"> sign_language</span>
+                                    </li>
+                                    <li>
+                                        <span class="material-symbols-outlined"> favorite</span>
+                                    </li>
+                                    <li>
+                                        <span class="material-symbols-outlined"> forum</span>
+                                        <?php if ($post['comment_count'] > 0): ?>
+                                            <span class="comment-count"><?php echo $post['comment_count']; ?></span>
+                                        <?php endif; ?>
+                                    </li>
+                                    <li>
+                                        <span class="material-symbols-outlined"> send</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    <?php endforeach; ?>
+                </div>
 
 
 
