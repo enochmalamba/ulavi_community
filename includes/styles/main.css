@@ -15,8 +15,8 @@
 }
 
 .dark-theme {
-  --bg: #000;
-  --bg2: #111;
+  --bg: #111;
+  --bg2: #000;
   --font: #fff;
   --grey: #222;
   --card-bg: #333;
