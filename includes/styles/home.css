@@ -4,6 +4,7 @@
   gap: 5px;
   width: min(800px, 99%);
   padding: 20px;
+  padding-bottom: 10px;
   background: var(--card-bg);
   border-radius: 4px;
   overflow: hidden;
@@ -321,6 +322,7 @@
   .feed {
     width: 100%;
     padding: 6px;
+    padding-bottom: 50px;
   }
   .post {
     padding: 5px 0;
