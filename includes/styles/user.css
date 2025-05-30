@@ -101,7 +101,7 @@ button {
   font-weight: 500;
   display: flex;
   align-items: center;
-  width: min(300px, 90 %);
+  width: min(300px, 90%);
   position: relative;
   cursor: pointer;
 }
