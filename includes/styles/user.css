@@ -52,6 +52,7 @@ button {
   display: flex;
   /* border-top: 1px solid var(--accent); */
   border-bottom: 1px solid var(--accent);
+  margin-bottom: 10px;
 }
 
 .profile-nav button {
@@ -112,4 +113,11 @@ button {
   position: absolute;
   top: 0;
   right: -27px;
+}
+
+/* hide the settings and activity so as to let js decide */
+
+.user-settings,
+.user-activity {
+  display: none;
 }
