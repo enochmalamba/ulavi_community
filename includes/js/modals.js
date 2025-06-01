@@ -1,23 +1,23 @@
 let formHTML = "";
 const formGenerator = (label, inputName, type, value) => {
   formHTML = `
-    <div class="form-group">
+    <form nethod="post" action="includes/backend/profile_edit.php" class="form-group">
         <label for="${inputName}">${label}</label>
         <input type="${type}" class="form-control" id="${inputName}" name="${inputName}" value="${value}">
         <input type="reset" value="Cancel" id="cancel-modal-btn"  name="reset_${inputName}">
         <input type="submit"  value="Submit" name="edit_${inputName}">
-    </div>`;
+    </form>`;
   document.getElementById("form").innerHTML = formHTML;
 };
 
-const textareaGenerator = (label, inputName, value) => {
+const textareaGenerator = () => {
   formHTML = `
-    <div class="form-group">
-        <label for="${inputName}">${label}</label>
-        <textarea class="form-control" id="${inputName}" name="${inputName}">${value}</textarea>
-        <input type="reset" value="Cancel" id="cancel-modal-btn"  name="reset_${inputName}">
-        <input type="submit"  value="Submit" name="edit_${inputName}">
-    </div>`;
+    <form method="post" action="includes/backend/profile_edit.php" class="form-group">
+        <label for="bio">Edit bio</label>
+        <textarea class="form-control"  name="bio">${value}</textarea>
+        <input type="reset" value="Cancel" id="cancel-modal-btn"  name="reset_bio" >
+        <input type="submit"  value="Submit" name="edit_bio">
+    </form>`;
   document.getElementById("form").innerHTML = formHTML;
 };
 
@@ -37,7 +37,7 @@ const logOutModal = () => {
     <form class="modal-form" method="post" action="includes/backend/auth.php">
         <p>Are you sure you want to log out?</p>
         <input type="reset" value="Cancel" id="cancel-modal-btn"  name="reset_log_out">
-        <input type="submit"  value="Yes" name="logout">
+        <input type="submit"  value="Log out" name="logout">
     </form>`);
 };
 

@@ -96,13 +96,12 @@ button {
 
 .settings-grp p span {
   border: 1px solid var(--shadow);
-  padding: 5px;
+  padding: 10px 5px;
   border-radius: 10px;
-  font-size: 15px;
   font-weight: 500;
   display: flex;
   align-items: center;
-  width: min(300px, 90%);
+  width: 80%;
   position: relative;
   cursor: pointer;
 }
@@ -117,7 +116,8 @@ button {
 
 /* hide the settings and activity so as to let js decide */
 
-.user-settings,
+.edit-profile,
+.account-settings,
 .user-activity {
   display: none;
 }
