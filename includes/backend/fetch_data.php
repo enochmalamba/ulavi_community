@@ -2,13 +2,10 @@
 require 'config.php';
 include_once 'functions.php';
 
-if (isset($_POST['logout'])) {
-    session_destroy();
-    header("Location: signin.php");
-    exit();
-}
+
+
 //Get all the users
-$usersArray = array();
+$allUsers = array();
 $usersSql = "SELECT * FROM community_people";
 $usersResult = $conn->query($usersSql);
 
@@ -17,9 +14,10 @@ if ($usersResult->num_rows > 0) {
         $user = array();
         $user['username'] = $aUser['username'];
         $user['user_id'] = $aUser['user_id'];
+        $user['email'] = $aUser['email'];
 
         //get the photo and the title of the user being displayed
-        $stmt = $conn->prepare("SELECT profile_photo, user_title, bio, user_location FROM user_profile WHERE user_id = ?");
+        $stmt = $conn->prepare("SELECT profile_photo, user_title, bio, user_location, gender, dob, user_role FROM user_profile WHERE user_id = ?");
         $stmt->bind_param("i", $aUser['user_id']);
         $stmt->execute();
         $theResult = $stmt->get_result();
@@ -30,21 +28,31 @@ if ($usersResult->num_rows > 0) {
             $userTitle =  $userInfo['user_title'];
             $userBio =  $userInfo['bio'];
             $userLocation =  $userInfo['user_location'];
+            $userDOB = $userInfo['dob'];
+            $userGender = $userInfo['gender'];
+            $userRole = $userInfo['user_role'];
         } else {
             $profilePic = "https://i.pinimg.com/736x/ae/25/58/ae25588122b4e9efaf260c6e1ea84641.jpg";
             $userTitle =  "Unkown";
             $userBio =  "Unkown";
             $userLocation =  "Unkown";
+            $userDOB = "Unkown";
+            $userGender = "Unkown";
         }
 
-        $userData = [
+        $userProfile = [
+            'email' => $aUser['email'],
             'name' => $aUser['username'],
             'id' => $aUser['user_id'],
             'profile_photo' => $profilePic,
-            'user_title' => $userTitle
+            'title' => $userTitle,
+            'dob' => $userDOB,
+            'gender' => $userGender,
+            'location' => $userLocation,
+            'role' => $userRole
         ];
 
-        $usersArray[] = $userData;
+        $allUsers[] = $userProfile;
     }
 }
 //get posts from database to display on the feed

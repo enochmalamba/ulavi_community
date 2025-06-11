@@ -1,48 +1,35 @@
-let formHTML = "";
-const formGenerator = (label, inputName, type, value) => {
-  formHTML = `
-    <form nethod="post" action="includes/backend/profile_edit.php" class="form-group">
-        <label for="${inputName}">${label}</label>
-        <input type="${type}" class="form-control" id="${inputName}" name="${inputName}" value="${value}">
-        <input type="reset" value="Cancel" id="cancel-modal-btn"  name="reset_${inputName}">
-        <input type="submit"  value="Submit" name="edit_${inputName}">
-    </form>`;
-  document.getElementById("form").innerHTML = formHTML;
+const textFormGenerator = (label, value, name, submitName) => {
+  return `
+  <form method="post">
+    <label></label>
+    <input type="text" name="${name}" placeholder="${label}" value="${value}" >
+    <button id="cancel-modal-btn">Cancel</button>
+    <button type="submit" name="${submitName}">Save</button>
+  </form>
+  `;
 };
 
-const textareaGenerator = () => {
-  formHTML = `
-    <form method="post" action="includes/backend/profile_edit.php" class="form-group">
-        <label for="bio">Edit bio</label>
-        <textarea class="form-control"  name="bio">${value}</textarea>
-        <input type="reset" value="Cancel" id="cancel-modal-btn"  name="reset_bio" >
-        <input type="submit"  value="Submit" name="edit_bio">
-    </form>`;
-  document.getElementById("form").innerHTML = formHTML;
-};
-
-const profilePhotoUpload = () => {
-  formHTML = `
-    <div class="form-group">
-        <label for="profile_photo">Upload Profile Photo</label>
-        <input type="file" class="form-control" id="profile_photo" name="profile_photo">
-        <input type="reset" value="Cancel" id="cancel-modal-btn"  name="reset_profile_photo">
-        <input type="submit"  value="Upload" name="upload_profile_photo">
-    </div>`;
-  document.getElementById("form").innerHTML = formHTML;
+const bioForm = () => {
+  return `
+  <form>
+    <textarea name="new_bio" ><?php echo htmlspecialchars($_SESSION['bio']); ?></textarea>
+    <button id="cancel-modal-btn">Cancel</button>
+    <button type="submit" name="update_bio">Save</button>
+  </form>
+  `;
 };
 
 const logOutModal = () => {
-  return (formHTML = `
+  return `
     <form class="modal-form" method="post" action="includes/backend/auth.php">
         <p>Are you sure you want to log out?</p>
         <input type="reset" value="Cancel" id="cancel-modal-btn"  name="reset_log_out">
         <input type="submit"  value="Log out" name="logout">
-    </form>`);
+    </form>`;
 };
 
 const createPostModal = () => {
-  formHTML = `
+  `
         <div id="create_post" class="create_post">
                 <form action="post_submit.php" method="post" enctype="multipart/form-data">
                     <label for="title">Enter post title <span>*</span></label>
@@ -65,5 +52,4 @@ const createPostModal = () => {
                     </div>
                 </form>
             </div>`;
-  overlay.innerHTML = formHTML;
 };

@@ -34,6 +34,7 @@ if (isset($_POST['signup'])) {
 
         $stmt->close();
         unset($_SESSION['email_error']);
+        $_SESSION['account-success'] = 'Account created successfuly!';
         header("Location: ../../user_info1.php");
         exit();
     }
@@ -55,6 +56,24 @@ if (isset($_POST['signin'])) {
                 $_SESSION['user_id'] = $userdata['user_id'];
                 $_SESSION['username'] = $userdata['username'];
                 $_SESSION['email'] = $userdata['email'];
+
+                //get profile
+                $stmt = $conn->prepare("SELECT user_role, user_title, dob, gender, user_location, profile_photo, bio FROM user_profile WHERE user_id = ?");
+                $stmt->bind_param('i', $_SESSION['user_id']);
+               if ($stmt->execute()){
+    $profileResult = $stmt->get_result();
+    if($profileResult->num_rows === 1){
+        $profileData = $profileResult->fetch_assoc(); // ← Add this line
+        $_SESSION['role'] = $profileData['user_role'];
+        $_SESSION['title'] = $profileData['user_title'];
+        $_SESSION['dob'] = $profileData['dob'];
+        $_SESSION['gender'] = $profileData['gender'];
+        $_SESSION['location'] = $profileData['user_location'];
+        $_SESSION['profile_photo'] = $profileData['profile_photo'];
+        $_SESSION['bio'] = $profileData['bio'];
+    }
+}
+
                 unset($_SESSION['signin_error']);
                 header("Location: ../../home.php");
                 exit();

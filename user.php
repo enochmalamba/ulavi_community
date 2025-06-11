@@ -11,8 +11,7 @@ foreach ($postsArray as $post) {
         $userPosts[] = $post;
     }
 }
-//fake profile pic for now
-$profilePic = "https://i.pinimg.com/736x/ae/25/58/ae25588122b4e9efaf260c6e1ea84641.jpg";
+
 
 
 ?>
@@ -90,16 +89,15 @@ $profilePic = "https://i.pinimg.com/736x/ae/25/58/ae25588122b4e9efaf260c6e1ea846
                 <div class="profile">
                     <!-- <button> <i class='bx  bx-edit'></i>Edit profile</button> -->
                     <div class="profile-top">
-                        <img src="<?php echo $profilePic ?>"
+                        <img src="<?php echo htmlspecialchars($_SESSION['profile_photo']) ?>"
                             alt="<?php echo htmlspecialchars($_SESSION['username']) ?>">
                         <div>
                             <h4> <?php echo htmlspecialchars($_SESSION['username']) ?> </h4>
-                            <p>Web Developer </p>
+                            <p><?php echo htmlspecialchars($_SESSION['title']) ?> </p>
                             <p> <?php echo htmlspecialchars($_SESSION['email']) ?> </p>
                         </div>
                     </div>
-                    <p class="user-bio">Passionate backend developer skilled in PHP, MySQL, and secure coding. I
-                        specialize in user authentication, dynamic content management, and troubleshooting.</p>
+                    <p class="user-bio"><?php echo htmlspecialchars($_SESSION['bio']) ?></p>
 
                 </div>
                 <div class="profile-nav">
@@ -119,11 +117,11 @@ $profilePic = "https://i.pinimg.com/736x/ae/25/58/ae25588122b4e9efaf260c6e1ea846
                         <h4>Edit Profile</h4>
                         <p>Username: <span id="username-edit"> <?php echo htmlspecialchars($_SESSION['username']) ?> <i
                                     class='bx  bx-edit'></i></span> </p>
-                        <p>Proffession: <span id="proffession-edit">Web Developer<i class='bx  bx-edit'></i> </span>
+                        <p>Proffession: <span id="proffession-edit"><?php echo htmlspecialchars($_SESSION['title']) ?><i
+                                    class='bx  bx-edit'></i> </span>
                         </p>
-                        <p>Bio: <span id="bio-edit">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem
-                                quae
-                                necessitatibus consequatur doloremque non vitae qui fugiat! <i class='bx  bx-edit'></i>
+                        <p>Bio: <span id="bio-edit"><?php echo htmlspecialchars($_SESSION['bio']) ?> <i
+                                    class='bx  bx-edit'></i>
                             </span></p>
                         <p>Profile Picture: <span id="profile-pic-edit">Change <i class='bx  bx-edit'></i> </span> </p>
                     </div>
@@ -132,8 +130,10 @@ $profilePic = "https://i.pinimg.com/736x/ae/25/58/ae25588122b4e9efaf260c6e1ea846
                         <p>Email: <span id="email-edit"><?php echo htmlspecialchars($_SESSION['email']) ?> <i
                                     class='bx  bx-edit'></i></span> </p>
                         <p>Password : <span id="password-edit">**********<i class='bx  bx-edit'></i> </span> </p>
-                        <p>Location: <span id="location-edit">Lilongwe<i class='bx  bx-edit'></i> </span> </p>
-                        <p>Gender: <span id="gender-edit">Male<i class='bx  bx-edit'></i> </span> </p>
+                        <p>Location: <span id="location-edit"><?php echo htmlspecialchars($_SESSION['location']) ?><i
+                                    class='bx  bx-edit'></i> </span> </p>
+                        <p>Gender: <span id="gender-edit"><?php echo htmlspecialchars($_SESSION['gender']) ?><i
+                                    class='bx  bx-edit'></i> </span> </p>
 
                     </div>
 
