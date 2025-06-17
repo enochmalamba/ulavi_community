@@ -94,3 +94,42 @@ function showSection() {
       break;
   }
 }
+
+//editing the profile functions
+
+profilePicEdit.addEventListener("click", () => {
+  openModal(profilePicForm);
+});
+
+bioEdit.addEventListener("click", () => {
+  openModal(bioForm);
+});
+
+emailEdit.addEventListener("click", () => {
+  openModal(emailForm);
+});
+
+passwordEdit.addEventListener("click", () => {
+  openModal(changePasswordForm); // Fixed function name
+});
+
+locationEdit.addEventListener("click", () => {
+  try {
+    openModal(() =>
+      textFormGenerator(
+        "Location",
+        userLocation,
+        "new_location",
+        "update_location"
+      )
+    );
+  } catch (error) {
+    return `<h2>Error: ${error}</h2>`;
+  }
+});
+
+usernameEdit.addEventListener("click", () => {
+  openModal(() =>
+    textFormGenerator("Username", username, "new_username", "save_username")
+  );
+});

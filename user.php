@@ -16,6 +16,16 @@ foreach ($postsArray as $post) {
 
 ?>
 
+<script>
+export const username = `<?php echo htmlspecialchars($_SESSION['username']) ?>`;
+export const email = `<?php echo htmlspecialchars($_SESSION['email']) ?>`;
+export const proffession = `<?php echo htmlspecialchars($_SESSION['title']) ?>`;
+export const dob = `<?php echo htmlspecialchars($_SESSION['dob']) ?>`;
+export const bio = `<?php echo htmlspecialchars($_SESSION['bio']) ?>`;
+export const gender = `<?php echo htmlspecialchars($_SESSION['gender']) ?>`;
+export const userLocation = `<?php echo htmlspecialchars($_SESSION['location']) ?>`;
+export const profile_photo = `<?php echo htmlspecialchars($_SESSION['profile_photo']) ?>`;
+</script>
 
 
 <!DOCTYPE html>
@@ -233,6 +243,7 @@ foreach ($postsArray as $post) {
         </div>
 
     </main>
+
     <script src="includes/js/modals.js"></script>
     <script src="includes/js/main.js"></script>
     <script src="includes/js/user.js"></script>

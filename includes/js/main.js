@@ -57,7 +57,8 @@ function changeUIicon(theme) {
   }
 }
 
-window.addEventListener("load", loadTheme);
+// window.addEventListener("load", loadTheme);
+loadTheme();
 
 //start modal functionality
 function openModal(modalGeneratorFn) {
