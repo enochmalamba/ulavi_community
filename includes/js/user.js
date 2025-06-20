@@ -95,7 +95,7 @@ function showSection() {
   }
 }
 
-//editing the profile functions
+//editing accunt settings and profile functions
 
 profilePicEdit.addEventListener("click", () => {
   openModal(profilePicForm);
@@ -110,26 +110,42 @@ emailEdit.addEventListener("click", () => {
 });
 
 passwordEdit.addEventListener("click", () => {
-  openModal(changePasswordForm); // Fixed function name
+  openModal(changePasswordForm);
+});
+
+genderEdit.addEventListener("click", () => {
+  openModal(genderForm);
 });
 
 locationEdit.addEventListener("click", () => {
-  try {
-    openModal(() =>
-      textFormGenerator(
-        "Location",
-        userLocation,
-        "new_location",
-        "update_location"
-      )
-    );
-  } catch (error) {
-    return `<h2>Error: ${error}</h2>`;
-  }
+  openModal(() =>
+    textFormGenerator(
+      "Edit location",
+      userLocation,
+      "new_location",
+      "update_location"
+    )
+  );
 });
 
 usernameEdit.addEventListener("click", () => {
   openModal(() =>
-    textFormGenerator("Username", username, "new_username", "save_username")
+    textFormGenerator(
+      "Edit username",
+      username,
+      "new_username",
+      "save_username"
+    )
+  );
+});
+
+proffessionEdit.addEventListener("click", () => {
+  openModal(() =>
+    textFormGenerator(
+      "Edit proffession",
+      proffession,
+      "new_proffession",
+      "save_proffession"
+    )
   );
 });

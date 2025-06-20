@@ -29,10 +29,10 @@ if (!isset($_SESSION['user_id'])) {
             <label for="gender">What is your gender? 💫</label>
             <select name="gender" id="gender" required>
                 <option disabled selected value>--Select your identity--</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-                <option value="prefer_not_to_say">Prefer not to say</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+                <option value="Hidden">Prefer not to say</option>
             </select>
             <button type="submit" name="enter_user_data1">Next Step → Let's create your profile</button>
 

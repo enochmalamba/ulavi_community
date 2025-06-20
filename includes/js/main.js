@@ -65,6 +65,10 @@ function openModal(modalGeneratorFn) {
   overlay.style.display = "flex";
   overlay.onclick = closeModals;
   const modal = modalGeneratorFn();
+  if (modal === undefined || modal === null || modal === "") {
+    modalContainer.innerHTML = `<div class="modal-form"><p>Something went wrong</p></div>`;
+    return;
+  }
   modalContainer.innerHTML = modal;
   modalContainer.style.display = "flex";
   const cancelModalBtn = document.getElementById("cancel-modal-btn");
