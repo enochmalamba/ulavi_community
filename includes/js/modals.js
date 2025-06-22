@@ -13,7 +13,7 @@ const textFormGenerator = (label, value, name, submitName) => {
 
 const bioForm = () => {
   return `
-   <form method="post">
+   <form action="includes/backend/account_edit.php" method="post">
         <label for="new_bio">Update bio</label>
         <textarea name="new_bio">${bio}</textarea>
         <div class="btn-container">
@@ -26,7 +26,7 @@ const bioForm = () => {
 
 const changePasswordForm = () => {
   return `
- <form method="post">
+ <form action="includes/backend/account_edit.php" method="post">
         <label>Old password</label>
         <input type="password" name="old_password" required />
         <label>New password</label>
@@ -44,7 +44,7 @@ const changePasswordForm = () => {
 
 const emailForm = () => {
   return `
-    <form method="post">
+    <form action="includes/backend/account_edit.php" method="post">
         <label>New email</label>
         <input type="email" name="new_email" value="${email}" required />
         <div class="btn-container">
@@ -57,7 +57,7 @@ const emailForm = () => {
 
 const profilePicForm = () => {
   return `
- <form method="post" enctype="multipart/form-data">
+ <form action="includes/backend/account_edit.php" method="post" enctype="multipart/form-data">
         <label>Upload new profile picture</label>
         <input type="file" accept="image/*" name="profile_photo" id="profile_photo" required />
         <img src="${profile_photo}" alt="Image preview" id="img-preview" style="max-width: 200px; max-height: 200px;">
@@ -71,7 +71,7 @@ const profilePicForm = () => {
 
 const genderForm = () => {
   return `
-  <form method="post">
+  <form action="includes/backend/account_edit.php" method="post">
     <label>Change your identity</label>
     <select name="gender" id="gender" required>
         <option disabled selected value>--Select your identity--</option>
@@ -97,8 +97,8 @@ const logOutModal = () => {
 
 const createPostModal = () => {
   return `
-    <div id="create_post" class="create_post">
-        <form action="post_submit.php" method="post" enctype="multipart/form-data">
+   
+        <form action="includes/backend/post_submit.php" method="post" enctype="multipart/form-data">
             <label for="title">Enter post title <span>*</span></label>
             <input type="text" name="title" id="title" placeholder="Write an attention-grabbing headline..." required>
 
@@ -114,9 +114,9 @@ const createPostModal = () => {
                 </span>
             </div>
             <div class="form-btns">
-                <button type="reset" id="cancel_post">Cancel</button>
+                <button type="reset" id="cancel_modal_btn">Cancel</button>
                 <button type="submit" name="create_post">Publish Post</button>
             </div>
         </form>
-    </div>`;
+    `;
 };

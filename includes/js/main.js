@@ -84,3 +84,4 @@ function closeModals() {
 logoutBtn.onclick = () => {
   openModal(logOutModal);
 };
+createPostBtn.onclick = () => openModal(createPostModal);
