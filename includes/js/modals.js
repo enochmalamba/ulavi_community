@@ -1,6 +1,6 @@
 const textFormGenerator = (label, value, name, submitName) => {
   return `
-     <form method="post">
+     <form action="includes/backend/account_edit.php" method="post" >
         <label>${label}</label>
         <input type="text" name="${name}" placeholder="${label}" value="${value}">
         <div class="btn-container">

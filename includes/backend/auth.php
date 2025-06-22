@@ -3,16 +3,22 @@ session_start();
 include_once('config.php');
 
 if (isset($_POST['signup'])) {
-    $username = $_POST['username'];
-    $email = $_POST['email'];
+    $username = trim($_POST['username']);
+    $email = strtolower(trim($_POST['email'])); // Normalize email
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    $check_mail = "SELECT * FROM community_people WHERE email = '$email'";
-    $result = mysqli_query($conn, $check_mail);
+    // Check if email exists (case-insensitive)
+    $check_stmt = $conn->prepare("SELECT user_id, email FROM community_people WHERE LOWER(email) = ?");
+    $check_stmt->bind_param("s", $email);
+    $check_stmt->execute();
+    $result = $check_stmt->get_result();
+    
     if ($result->num_rows > 0) {
-
-        $_SESSION['email_error'] = "Email is taken, please use a different one";
-        header("Location: signup.php");
+        $row = $result->fetch_assoc();
+        error_log("Registration attempt with existing email: " . $row['email']);
+        $_SESSION['email_error'] = "Email is already registered, please use a different one";
+        header("Location: ../../signup.php");
+        exit();
     } else {
         $stmt = $conn->prepare("INSERT INTO community_people (username, email, password) VALUES (?, ?, ?)");
         $stmt->bind_param("sss", $username, $email, $password);
@@ -30,7 +36,25 @@ if (isset($_POST['signup'])) {
             $_SESSION['user_id'] = $current_user['user_id'];
             $_SESSION['username'] = $current_user['username'];
             $_SESSION['email'] = $current_user['email'];
+
+             //populate the user_profile with default data
+       $role = "Public User";
+$title = "Unknown";
+$dob = "Unknown";
+$gender = "Unknown";
+$location = "Unknown";
+$photo = "https://i.pinimg.com/736x/ae/25/58/ae25588122b4e9efaf260c6e1ea84641.jpg";
+$bio = "Hey there, I'm a member of the ULAVi Community!";
+
+$profileStmt = $conn->prepare("INSERT INTO user_profile (user_id, user_role, user_title, dob, gender, user_location, profile_photo, bio) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+$profileStmt->bind_param("isssssss", $last_id, $role, $title, $dob, $gender, $location, $photo, $bio);
+$profileStmt->execute();
+
+        $profileStmt->close();
+        //get profile
+                get_profile();
         }
+
 
         $stmt->close();
         unset($_SESSION['email_error']);
@@ -58,21 +82,7 @@ if (isset($_POST['signin'])) {
                 $_SESSION['email'] = $userdata['email'];
 
                 //get profile
-                $stmt = $conn->prepare("SELECT user_role, user_title, dob, gender, user_location, profile_photo, bio FROM user_profile WHERE user_id = ?");
-                $stmt->bind_param('i', $_SESSION['user_id']);
-               if ($stmt->execute()){
-    $profileResult = $stmt->get_result();
-    if($profileResult->num_rows === 1){
-        $profileData = $profileResult->fetch_assoc(); // ← Add this line
-        $_SESSION['role'] = $profileData['user_role'];
-        $_SESSION['title'] = $profileData['user_title'];
-        $_SESSION['dob'] = $profileData['dob'];
-        $_SESSION['gender'] = $profileData['gender'];
-        $_SESSION['location'] = $profileData['user_location'];
-        $_SESSION['profile_photo'] = $profileData['profile_photo'];
-        $_SESSION['bio'] = $profileData['bio'];
-    }
-}
+                get_profile();
 
                 unset($_SESSION['signin_error']);
                 header("Location: ../../home.php");
@@ -87,6 +97,28 @@ if (isset($_POST['signin'])) {
         }
     }
 }
+
+function get_profile(){
+    global $conn; 
+    $stmt = $conn->prepare("SELECT user_role, user_title, dob, gender, user_location, profile_photo, bio FROM user_profile WHERE user_id = ?");
+    $stmt->bind_param('i', $_SESSION['user_id']);
+    if ($stmt->execute()){
+        $profileResult = $stmt->get_result();
+        if($profileResult->num_rows === 1){
+            $profileData = $profileResult->fetch_assoc();
+            $_SESSION['role'] = $profileData['user_role'];
+            $_SESSION['title'] = $profileData['user_title'];
+            $_SESSION['dob'] = $profileData['dob'];
+            $_SESSION['gender'] = $profileData['gender'];
+            $_SESSION['location'] = $profileData['user_location'];
+            $_SESSION['profile_photo'] = $profileData['profile_photo'];
+            $_SESSION['bio'] = $profileData['bio'];
+        }
+    } else {
+        error_log("get_profile error: " . $stmt->error); // Optional: log error
+    }
+}
+
 
 if (isset($_POST['logout'])) {
     session_destroy();
