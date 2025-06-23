@@ -15,8 +15,6 @@ foreach ($postsArray as $selected_post) {
         break; // Exit loop once found
     }
 }
-} else {
-    $post = null;
 }
 ?>
 
@@ -25,51 +23,22 @@ foreach ($postsArray as $selected_post) {
 
 <head>
     <meta charset="UTF-8">
-    <style>
-    form {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        gap: 10px;
-    }
 
-    form label {
-        font-size: 16px;
-        font-weight: 600;
-    }
-
-    form label span {
-        color: red;
-    }
-
-    form input:not([type="submit"]),
-    form textarea {
-        font-size: 16px;
-        width: 100%;
-        padding: 5px;
-        border: none;
-        outline: none;
-        border-bottom: 1px solid var(--accent);
-        color: var(--font);
-        background: none;
-    }
-
-    form textarea {
-        field-sizing: content;
-        max-height: 200px;
-    }
-
-    form input:not([type="submit"]):focus,
-    form textarea:focus {
-        outline: 0;
-    }
-    </style>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material%20Symbols%20Outlined" />
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="includes/styles/main.css">
     <link rel="stylesheet" href="includes/styles/home.css">
+    <link rel="stylesheet" href="includes/styles/post.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($post['title']); ?> &bull; ULAVi Community</title>
+    <title>
+        <?php if (isset($post) && $post !== null) {
+            echo $post['title'] . htmlspecialchars("&bullet; ULAVi Community"); 
+        }
+        else {
+            echo "404 - Post not found";
+        }
+        ?>
+    </title>
 </head>
 
 <body>
@@ -80,7 +49,7 @@ foreach ($postsArray as $selected_post) {
         <div class="header">
             <a href="home.php" class="title sml logo"> <i class='bx bxs-palette'></i> <span>ulavi <br>
                     community</span></a>
-            <h2 class="current-page title sml ">Home</h2>
+            <h2 class="current-page title sml ">Post</h2>
             <form class="search-bar">
                 <input type="text" name="query" placeholder="Search..">
                 <button type="submit"><i class='bx bx-search'></i></button>
@@ -150,26 +119,20 @@ foreach ($postsArray as $selected_post) {
                         </a>
 
                     </div>
-                    <a href="post.php?post_id=<?php echo $post['post_id']; ?>" class="post-link">
-                        <h3 class="post-title title sml"><?php echo $post['title']; ?></h3>
-                        <p class="post-content">
-                            <?php
-                                    // Show truncated content on the feed
-                                    $truncatedContent = substr($post['content'], 0, 150);
-                                    $suffix = strlen($post['content']) > 150 ? '...<strong>more</strong>' : '';
-                                    echo nl2br(htmlspecialchars($truncatedContent)) . $suffix;
-                                    ?>
-                        </p>
+                    <h3 class="post-title title sml"><?php echo $post['title']; ?></h3>
+                    <p class="post-content">
+                        <?php echo htmlspecialchars($post['content']);?>
+                    </p>
 
-                        <?php if (!empty($post['media_url'])): ?>
-                        <div class="post-image">
-                            <img src="<?php echo htmlspecialchars($post['media_url']); ?>"
-                                alt="<?php echo htmlspecialchars($post['title']); ?>">
-                        </div>
+                    <?php if (!empty($post['media_url'])): ?>
+                    <div class="post-image">
+                        <img src="<?php echo htmlspecialchars($post['media_url']); ?>"
+                            alt="<?php echo htmlspecialchars($post['title']); ?>">
+                    </div>
 
 
-                        <?php endif; ?>
-                    </a>
+                    <?php endif; ?>
+
                     <div class="post-interactions">
                         <ul>
                             <li>
@@ -191,10 +154,45 @@ foreach ($postsArray as $selected_post) {
                     </div>
 
                 </div>
-                <!-- if post doesnst extst show message -->
+                <form action="includes/backend/add_comment.php" class="comment_form" method="post">
+                    <input type="hidden" name="post_id" value="<?php echo $post['post_id']; ?>">
+                    <input type="text" name="comment" placeholder="Add a comment">
+
+                </form>
+
+                <!-- show comments if they exist -->
+                <?php if ($post['comment_count'] > 0): ?>
+                <div class="comments">
+                    <?php foreach ($post['comments'] as $comment) : ?>
+                    <div class="comment">
+                        <div class="comment-header">
+                            <img src="<?php echo htmlspecialchars($comment['author']['profile_photo']); ?>"
+                                alt="User Profile Picture" class="comment-profile-pic">
+                            <h4 class="comment-author-name">
+                                <?php echo $comment['author']['name']; ?><small><?php echo format_time(strtotime($comment['created_at'])); ?></small>
+                            </h4>
+
+                        </div>
+                        <p class="comment-content"><?php echo $comment['content']; ?></p>
+
+                    </div>
+                    <?php endforeach; ?>
+                </div>
                 <?php else : ?>
+                <!-- if there are no comments show message -->
+                <div class="no-comment">
+                    <center style='margin-top: 30px'>
+                        <small>No comments available, be the first one to comment</small>
+                    </center>
+                </div>
+                <?php endif; ?>
+                <?php else : ?>
+                <!-- if post doesnst extst show message -->
+
                 <div class="post">
-                    <h2 style="font-size: 60px;">Post not found</h2>
+                    <h2 style="font-size: 60px; text-align: center;"> 404 <br> <span
+                            style='font-size: 20px; font-weight: 300; '>Post not
+                            found</span></h2>
                 </div>
                 <?php endif; ?>
 

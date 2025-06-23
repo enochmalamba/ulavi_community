@@ -115,12 +115,45 @@ if ($result && $result->num_rows > 0) {
                 'user_id' => NULL
             ];
         }
-        $commentsStmt = $conn->prepare("SELECT COUNT(*) as comment_count FROM comments WHERE post_id = ?");
-        $commentsStmt->bind_param('i', $post['post_id']);
-        $commentsStmt->execute();
-        $commentResult = $commentsStmt->get_result();
-        $commentCount = $commentResult->fetch_assoc()['comment_count'];
-        $post['comment_count'] = $commentCount;
+
+        // get all comments and their count 
+$comments = array();
+
+$commentsStmt = $conn->prepare("SELECT * FROM comments WHERE post_id = ?");
+$commentsStmt->bind_param('i', $post['post_id']);
+$commentsStmt->execute();
+$commentResult = $commentsStmt->get_result();
+
+while ($commentRow = $commentResult->fetch_assoc()) {
+    $commentAuthor = null;
+
+    // Search for the comment's author in $allUsers
+    foreach ($allUsers as $aUser) {
+        if ($aUser['id'] == $commentRow['user_id']) {
+            $commentAuthor = [
+                'id' => $aUser['id'],
+                'name' => $aUser['name'],
+                'profile_photo' => $aUser['profile_photo'],
+                'role' => $aUser['role']
+            ];
+            break;
+        }
+    }
+
+    // Add author info to the comment
+    $commentRow['author'] = $commentAuthor ?? [
+        'id' => null,
+        'name' => 'Unknown',
+        'profile_photo' => 'https://i.pinimg.com/736x/ae/25/58/ae25588122b4e9efaf260c6e1ea84641.jpg',
+        'role' => 'Unknown'
+    ];
+
+    $comments[] = $commentRow;
+}
+
+
+
+        
 
 
         $postData = [
@@ -137,7 +170,8 @@ if ($result && $result->num_rows > 0) {
                 'profile_photo' => $postAuthorInfo['profile_photo'],
                 'user_role' => $postAuthorInfo['user_role']
             ],
-            'comment_count' => $post['comment_count']
+            'comment_count' => count($comments),
+            'comments' => $comments
 
         ];
 
