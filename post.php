@@ -1,20 +1,19 @@
 <?php
 session_start();
-require 'includes/backend/config.php';
-require_once('includes/backend/fetch_data.php');
+require "includes/backend/config.php";
+require_once "includes/backend/fetch_data.php";
 
-if (isset($_GET['post_id']) && is_numeric($_GET['post_id'])) {
-    $postID = intval($_GET['post_id']);
-    //get the post from the post array using its id
-   
+if (isset($_GET["post_id"]) && is_numeric($_GET["post_id"])) {
+  $postID = intval($_GET["post_id"]);
+  //get the post from the post array using its id
 
-$post = null;
-foreach ($postsArray as $selected_post) {
-    if ($selected_post['post_id'] == $postID) {
-        $post = $selected_post;
-        break; // Exit loop once found
+  $post = null;
+  foreach ($postsArray as $selected_post) {
+    if ($selected_post["post_id"] == $postID) {
+      $post = $selected_post;
+      break; // Exit loop once found
     }
-}
+  }
 }
 ?>
 
@@ -32,12 +31,10 @@ foreach ($postsArray as $selected_post) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
         <?php if (isset($post) && $post !== null) {
-            echo $post['title'] . htmlspecialchars("&bullet; ULAVi Community"); 
-        }
-        else {
-            echo "404 - Post not found";
-        }
-        ?>
+          echo $post["title"] . htmlspecialchars("&bullet; ULAVi Community");
+        } else {
+          echo "404 - Post not found";
+        } ?>
     </title>
 </head>
 
@@ -90,44 +87,60 @@ foreach ($postsArray as $selected_post) {
                     </li>
                     <li id="logout-btn"><span class="nav-btn"><i class='bx bx-log-out'></i>Log out</span></li>
 
-                    <li><a href="user.php"><i
-                                class='bx bx-user'></i><?php echo htmlspecialchars($_SESSION['username']) ?></a></li>
+                    <li><a href="user.php"><i class='bx bx-user'></i><?php echo htmlspecialchars(
+                                  $_SESSION["username"],
+                                ); ?></a></li>
                 </ul>
             </nav>
             <div class="feed">
 
 
                 <!-- show post if it exitsts -->
-                <?php if ($post) : ?>
+                <?php if ($post): ?>
                 <div class="post">
                     <div class="post-header">
-                        <a href="profile.php?user_id=<?php echo $post['author']['id']; ?>">
+                        <a href="profile.php?user_id=<?php echo $post["author"][
+                          "id"
+                        ]; ?>">
                             <div class="post-details">
-                                <img src="<?php echo htmlspecialchars($post['author']['profile_photo']); ?>"
-                                    alt="<?php echo htmlspecialchars($post['author']['name']); ?>" loading="lazy"
-                                    class="img" />
+                                <img src="<?php echo htmlspecialchars(
+                                  $post["author"]["profile_photo"],
+                                ); ?>" alt="<?php echo htmlspecialchars(
+                                      $post["author"]["name"],
+                                    ); ?>" loading="lazy" class="img" />
                                 <div class="post-author">
 
-                                    <h4 class="pa-name"><?php echo htmlspecialchars($post['author']['name']); ?> </h4>
+                                    <h4 class="pa-name"><?php echo htmlspecialchars(
+                                      $post["author"]["name"],
+                                    ); ?> </h4>
 
                                     <small>
-                                        <!--<?php echo htmlspecialchars($post['author']['user_role']); ?> &bull;-->
-                                        <?php echo format_time(strtotime($post['date'])); ?>
+                                        <!--<?php echo htmlspecialchars(
+                                          $post["author"]["user_role"],
+                                        ); ?> &bull;-->
+                                        <?php echo format_time(
+                                          strtotime($post["date"]),
+                                        ); ?>
                                     </small>
                                 </div>
                             </div>
                         </a>
 
                     </div>
-                    <h3 class="post-title title sml"><?php echo $post['title']; ?></h3>
+                    <h3 class="post-title title sml"><?php echo $post[
+                      "title"
+                    ]; ?></h3>
                     <p class="post-content">
-                        <?php echo htmlspecialchars($post['content']);?>
+                        <?php echo htmlspecialchars($post["content"]); ?>
                     </p>
 
-                    <?php if (!empty($post['media_url'])): ?>
+                    <?php if (!empty($post["media_url"])): ?>
                     <div class="post-image">
-                        <img src="<?php echo htmlspecialchars($post['media_url']); ?>"
-                            alt="<?php echo htmlspecialchars($post['title']); ?>">
+                        <img src="<?php echo htmlspecialchars(
+                          $post["media_url"],
+                        ); ?>" alt="<?php echo htmlspecialchars(
+                              $post["title"],
+                            ); ?>">
                     </div>
 
 
@@ -143,8 +156,10 @@ foreach ($postsArray as $selected_post) {
                             </li>
                             <li>
                                 <span class="material-symbols-outlined"> forum</span>
-                                <?php if ($post['comment_count'] > 0): ?>
-                                <span class="comment-count"><?php echo $post['comment_count']; ?></span>
+                                <?php if ($post["comment_count"] > 0): ?>
+                                <span class="comment-count"><?php echo $post[
+                                  "comment_count"
+                                ]; ?></span>
                                 <?php endif; ?>
                             </li>
                             <li>
@@ -155,30 +170,49 @@ foreach ($postsArray as $selected_post) {
 
                 </div>
                 <form action="includes/backend/add_comment.php" class="comment_form" method="post">
-                    <input type="hidden" name="post_id" value="<?php echo $post['post_id']; ?>">
+                    <input type="hidden" name="post_id" value="<?php echo $post[
+                      "post_id"
+                    ]; ?>">
                     <input type="text" name="comment" placeholder="Add a comment">
 
                 </form>
 
                 <!-- show comments if they exist -->
-                <?php if ($post['comment_count'] > 0): ?>
+                <?php if ($post["comment_count"] > 0): ?>
                 <div class="comments">
-                    <?php foreach ($post['comments'] as $comment) : ?>
+                    <h2 class="title sml">Comments</h2>
+                    <?php foreach ($post["comments"] as $comment): ?>
                     <div class="comment">
-                        <div class="comment-header">
-                            <img src="<?php echo htmlspecialchars($comment['author']['profile_photo']); ?>"
-                                alt="User Profile Picture" class="comment-profile-pic">
-                            <h4 class="comment-author-name">
-                                <?php echo $comment['author']['name']; ?><small><?php echo format_time(strtotime($comment['created_at'])); ?></small>
-                            </h4>
 
+                        <a href="profile.php?user_id=<?php echo $comment[
+                          "author"
+                        ]["id"]; ?>"><img src="<?php echo htmlspecialchars(
+                                  $comment["author"]["profile_photo"],
+                                ); ?>" alt="User Profile Picture" class="comment-profile-pic" /></a>
+                        <div class="comment-body">
+
+                            <a href="profile.php?user_id=<?php echo $comment[
+                              "author"
+                            ]["id"]; ?>">
+                                <h4 class="comment-author-name">
+                                    <?php echo $comment["author"]["name"]; ?>
+                                </h4>
+                            </a>
+
+                            <p class="comment-content"><?php echo $comment[
+                              "content"
+                            ]; ?></p>
+                            <small><?php echo format_time(
+                              strtotime($comment["created_at"]),
+                            ); ?></small>
                         </div>
-                        <p class="comment-content"><?php echo $comment['content']; ?></p>
+
+
 
                     </div>
                     <?php endforeach; ?>
                 </div>
-                <?php else : ?>
+                <?php else: ?>
                 <!-- if there are no comments show message -->
                 <div class="no-comment">
                     <center style='margin-top: 30px'>
@@ -186,7 +220,7 @@ foreach ($postsArray as $selected_post) {
                     </center>
                 </div>
                 <?php endif; ?>
-                <?php else : ?>
+                <?php else: ?>
                 <!-- if post doesnst extst show message -->
 
                 <div class="post">

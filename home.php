@@ -7,11 +7,7 @@ require 'includes/backend/fetch_data.php'
 
 <!DOCTYPE html>
 <html lang="en">
-<!-- to do: remove the console logging  -->
-<script>
-    const phpArray = <?php echo json_encode($postsArray); ?>;
-    console.log('PHP Array:', phpArray);
-</script>
+
 
 <head>
     <meta charset="UTF-8">
@@ -29,7 +25,8 @@ require 'includes/backend/fetch_data.php'
         <div class="modal-container" id="modal-container"></div>
 
         <div class="header">
-            <a href="home.php" class="title sml logo"> <i class='bx bxs-palette'></i> <span>ulavi <br> community</span></a>
+            <a href="home.php" class="title sml logo"> <i class='bx bxs-palette'></i> <span>ulavi <br>
+                    community</span></a>
             <h2 class="current-page title sml ">Home</h2>
             <form class="search-bar">
                 <input type="text" name="query" placeholder="Search..">
@@ -37,9 +34,22 @@ require 'includes/backend/fetch_data.php'
             </form>
             <div class="mobile-nav">
                 <span><i class='bx bx-search'></i></span>
-                <span class="light-mode"><i class="bx bx-sun"></i></span>
-                <span class="dark-mode"><i class="bx bx-moon"></i></span>
-                <a href="user.php"><i class="bx bx-user"></i></a>
+
+
+                <span><i class="bx bx-user"></i>
+                    <div class="dropdown">
+                        <?php if(isset($_SESSION['user_id'])): ?>
+                        <a href="user.php"><img src="<?php echo $_SESSION['profile_photo']; ?>"
+                                class="dp"><?php echo $_SESSION['username']; ?></a>
+                        <?php else: ?>
+                        <span><a href="signin.php"><i class="bx bx-user"></i>Sign in</a></span>
+
+                        <?php endif; ?>
+                        <span class="light-mode"><i class="bx bx-sun"></i>Light mode</span>
+                        <span class="dark-mode"><i class="bx bx-moon"></i>Dark mode</span>
+                        <span class="logout-btn"><i class='bx bx-log-out'></i>Log out</span>
+                    </div>
+                </span>
 
             </div>
         </div>
@@ -49,7 +59,7 @@ require 'includes/backend/fetch_data.php'
                     <li><a href="" class="active"><i class='bx bxs-home-alt-2'></i>
                             <div>Home</div>
                         </a></li>
-                    <li><a href=""><i class='bx bx-group'></i>
+                    <li><a href="community.php"><i class='bx bx-group'></i>
                             <div>Community</div>
                         </a></li>
                     <li id="create-post-btn">
@@ -69,14 +79,15 @@ require 'includes/backend/fetch_data.php'
                         <span class="nav-btn light-mode"><i class="bx bx-sun"></i>Light mode</span>
                         <span class="nav-btn dark-mode"><i class="bx bx-moon"></i>Dark mode</span>
                     </li>
-                    <li id="logout-btn"><span class="nav-btn"><i class='bx bx-log-out'></i>Log out</span></li>
+                    <li class="logout-btn"><span class="nav-btn"><i class='bx bx-log-out'></i>Log out</span></li>
 
-                    <li><a href="user.php"><i class='bx bx-user'></i><?php echo htmlspecialchars($_SESSION['username']) ?></a></li>
+                    <li><a href="user.php"><i
+                                class='bx bx-user'></i><?php echo htmlspecialchars($_SESSION['username']) ?></a></li>
                 </ul>
             </nav>
             <div class="feed">
-                <div class="create-post-btn" id="create-post-btn">
-                    <h2 class="title sml" style="padding-left: 5px;">Create post</h2>
+                <div class="create-post-btn" id="feedPostCreateBtn">
+                    <!-- <h2 class="title sml" style="padding-left: 5px;">Create post</h2> -->
                     <p>Share your thoughts, ideas, or story...</p>
                 </div>
                 <!-- <?php if (!empty($usersArray)):  ?>
@@ -95,77 +106,79 @@ require 'includes/backend/fetch_data.php'
                     </div>
                 <?php endif;  ?> -->
                 <?php if (!empty($postsArray)):  ?>
-                    <?php foreach ($postsArray as $post): ?>
-                        <div class="post">
-                            <div class="post-header">
-                                <a href="profile.php?user_id=<?php echo $post['author']['id']; ?>">
-                                    <div class="post-details">
-                                        <img
-                                            src="<?php echo htmlspecialchars($post['author']['profile_photo']); ?>"
-                                            alt="<?php echo htmlspecialchars($post['author']['name']); ?>"
-                                            loading="lazy"
-                                            class="img" />
-                                        <div class="post-author">
+                <?php foreach ($postsArray as $post): ?>
+                <div class="post">
+                    <div class="post-header">
+                        <a href="profile.php?user_id=<?php echo $post['author']['id']; ?>">
+                            <div class="post-details">
+                                <img src="<?php echo htmlspecialchars($post['author']['profile_photo']); ?>"
+                                    alt="<?php echo htmlspecialchars($post['author']['name']); ?>" loading="lazy"
+                                    class="img" />
+                                <div class="post-author">
 
-                                            <h4 class="pa-name"><?php echo htmlspecialchars($post['author']['name']); ?> </h4>
+                                    <h4 class="pa-name"><?php echo htmlspecialchars($post['author']['name']); ?> </h4>
 
-                                            <small><!--<?php echo htmlspecialchars($post['author']['user_role']); ?> &bull;--> <?php echo format_time(strtotime($post['date'])); ?></small>
-                                        </div>
-                                    </div>
-                                </a>
-                                <!-- <div class="post-category" >
+                                    <small>
+                                        <!--<?php echo htmlspecialchars($post['author']['user_role']); ?> &bull;-->
+                                        <?php echo format_time(strtotime($post['date'])); ?>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                        <!-- <div class="post-category" >
                                     <a href="">
                                         <span class="material-symbols-outlined"><?php echo htmlspecialchars($categoryIcon); ?></span> <?php echo htmlspecialchars($category); ?>
                                     </a>
                                 </div> -->
-                            </div>
-                            <a href="post.php?post_id=<?php echo $post['post_id']; ?>" class="post-link">
-                                <h3 class="post-title title sml"><?php echo $post['title']; ?></h3>
-                                <p class="post-content">
-                                    <?php
+                    </div>
+                    <a href="post.php?post_id=<?php echo $post['post_id']; ?>" class="post-link">
+                        <h3 class="post-title title sml"><?php echo $post['title']; ?></h3>
+                        <p class="post-content">
+                            <?php
                                     // Show truncated content on the feed
                                     $truncatedContent = substr($post['content'], 0, 150);
                                     $suffix = strlen($post['content']) > 150 ? '...<strong>more</strong>' : '';
                                     echo nl2br(htmlspecialchars($truncatedContent)) . $suffix;
                                     ?>
-                                </p>
+                        </p>
 
-                                <?php if (!empty($post['media_url'])): ?>
-                                    <div class="post-image">
-                                        <img src="<?php echo htmlspecialchars($post['media_url']); ?>" alt="<?php echo htmlspecialchars($post['title']); ?>">
-                                    </div>
-
-
-                                <?php endif; ?>
-                            </a>
-                            <div class="post-interactions">
-                                <ul>
-                                    <li>
-                                        <span class="material-symbols-outlined"> sign_language</span>
-                                    </li>
-                                    <li>
-                                        <span class="material-symbols-outlined"> favorite</span>
-                                    </li>
-                                    <li>
-                                        <span class="material-symbols-outlined"> forum</span>
-                                        <?php if ($post['comment_count'] > 0): ?>
-                                            <span class="comment-count"><?php echo $post['comment_count']; ?></span>
-                                        <?php endif; ?>
-                                    </li>
-                                    <li>
-                                        <span class="material-symbols-outlined"> send</span>
-                                    </li>
-                                </ul>
-                            </div>
-
+                        <?php if (!empty($post['media_url'])): ?>
+                        <div class="post-image">
+                            <img src="<?php echo htmlspecialchars($post['media_url']); ?>"
+                                alt="<?php echo htmlspecialchars($post['title']); ?>" />
                         </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <div class="no-posts">
-                        <h3 class="title lg">No posts found</h3>
-                        <p>Be the first to create a post in the community!</p>
-                        <a href="create_post.php" style="text-decoration: underline;">Create Post</a>
+
+
+                        <?php endif; ?>
+                    </a>
+                    <div class="post-interactions">
+                        <ul>
+                            <li>
+                                <span class="material-symbols-outlined"> sign_language</span>
+                            </li>
+                            <li>
+                                <span class="material-symbols-outlined"> favorite</span>
+                            </li>
+                            <li>
+                                <span class="material-symbols-outlined"> forum</span>
+                                <?php if ($post['comment_count'] > 0): ?>
+                                <span class="comment-count"><?php echo $post['comment_count']; ?></span>
+                                <?php endif; ?>
+                            </li>
+                            <li>
+                                <span class="material-symbols-outlined"> send</span>
+                            </li>
+                        </ul>
                     </div>
+
+                </div>
+                <?php endforeach; ?>
+                <?php else: ?>
+                <div class="no-posts">
+                    <h3 class="title lg">No posts found</h3>
+                    <p>Be the first to create a post in the community!</p>
+                    <a href="create_post.php" style="text-decoration: underline;">Create Post</a>
+                </div>
                 <?php endif; ?>
             </div>
             <div class="right-sidebar">
@@ -177,7 +190,8 @@ require 'includes/backend/fetch_data.php'
                     <img src="includes/images/stakks.jpg" alt="">
                 </div>
                 <div class="card">
-                    <h2 class="title sml" style="font-size: 15px;"><span class="material-symbols-outlined" style="font-size: 20px;">
+                    <h2 class="title sml" style="font-size: 15px;"><span class="material-symbols-outlined"
+                            style="font-size: 20px;">
                             ad
                         </span>Ad</h2>
                     <img src="includes/images/ad.jpeg" alt="">

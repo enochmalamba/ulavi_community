@@ -1,15 +1,16 @@
 const overlay = document.getElementById("overlay");
 const modalContainer = document.getElementById("modal-container");
 const createPostBtn = document.getElementById("create-post-btn");
+const feedPostCreateBtn = document.getElementById("feedPostCreateBtn");
 const lightModeBtns = document.querySelectorAll(".light-mode");
 const darkModeBtns = document.querySelectorAll(".dark-mode");
-const logoutBtn = document.getElementById("logout-btn");
+const logoutBtn = document.querySelectorAll(".logout-btn");
 
-const previewContainer = document.querySelector(".upload-img-preview");
-const imgInput = document.getElementById("post_image");
-const imgPreview = document.getElementById("img-preview");
-const imgPreviewClose = document.getElementById("img-preview-close");
-const cancelPostBtn = document.getElementById("cancel_post");
+// const previewContainer = document.querySelector(".upload-img-preview");
+// const imgInput = document.getElementById("post_image");
+// const imgPreview = document.getElementById("img-preview");
+// const imgPreviewClose = document.getElementById("img-preview-close");
+// const cancelPostBtn = document.getElementById("cancel_post");
 
 lightModeBtns.forEach((btn) => {
   btn.addEventListener("click", toggleLightMode);
@@ -81,7 +82,10 @@ function closeModals() {
   modalContainer.innerHTML = "";
 }
 
-logoutBtn.onclick = () => {
-  openModal(logOutModal);
-};
+logoutBtn.forEach((btn) => {
+  btn.onclick = () => {
+    openModal(logOutModal);
+  };
+});
 createPostBtn.onclick = () => openModal(createPostModal);
+feedPostCreateBtn.onclick = () => openModal(createPostModal);

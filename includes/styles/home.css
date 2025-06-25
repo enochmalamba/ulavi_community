@@ -21,110 +21,6 @@
   margin-top: 5px;
   color: var(--accent);
 }
-.create_post {
-  z-index: 21;
-  margin: 20px auto;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: min(800px, 95%);
-  height: 90vh;
-  padding: 20px;
-  background: var(--card-bg);
-  border-radius: 4px;
-  overflow: hidden;
-  overflow-y: auto;
-}
-
-.create_post form {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 10px;
-}
-
-.create_post form label {
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.create_post form label span {
-  color: red;
-}
-
-.create_post form input:not([type="submit"]),
-.create_post form textarea {
-  font-size: 16px;
-  width: 100%;
-  padding: 10px;
-  border: none;
-  outline: none;
-  border-bottom: 1px solid var(--accent);
-  color: var(--font);
-  background: none;
-}
-
-.create_post form textarea {
-  field-sizing: content;
-  max-height: 400px;
-}
-.create_post form input:not([type="submit"]):focus,
-.create_post form textarea:focus {
-  outline: 0;
-}
-
-.create_post form input[type="file"] {
-  font-size: 16px;
-  width: 100%;
-  padding: 10px;
-  border: none;
-  outline: none;
-  background: none;
-}
-
-.create_post .upload-img-preview {
-  display: flex;
-  width: 100%;
-  height: fit-content;
-  border-radius: 4px;
-  background: var(--card-bg);
-}
-
-.create_post .upload-img-preview img {
-  max-height: 150px;
-  background: var(--grey);
-  border-radius: 4px;
-  object-fit: cover;
-  object-position: center;
-}
-
-.create_post .form-btns {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  margin: 10px;
-  border-top: 1px solid var(--accent);
-  padding: 10px 0;
-}
-
-.create_post .form-btns button {
-  font-size: 18px;
-  font-weight: 600;
-  padding: 10px 20px;
-  border-radius: 4px;
-  border: 1px solid var(--accent);
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.create_post .form-btns button[type="submit"] {
-  background: var(--purple);
-  color: var(--bg);
-}
-.create_post .form-btns button:hover {
-  transform: scaleX(1.1);
-}
 
 .feed-profiles-row {
   display: flex;
@@ -135,7 +31,7 @@
   /* height: 270px; */
   flex-wrap: nowrap;
   overflow-x: auto;
-  overflow-y: hidden; /* add this */
+  overflow-y: hidden;
 }
 
 .feed-profiles-row .feed-profile-card {
@@ -214,8 +110,8 @@
 
 .post .post-header .img {
   margin-bottom: 10px;
-  width: 50px;
-  height: 50px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
   object-fit: cover;
   background: var(--grey);
@@ -333,8 +229,8 @@
   }
 
   .post .post-header img {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
   }
 
   .post .pa-name {

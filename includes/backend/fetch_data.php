@@ -49,7 +49,8 @@ if ($usersResult->num_rows > 0) {
             'dob' => $userDOB,
             'gender' => $userGender,
             'location' => $userLocation,
-            'role' => $userRole
+            'role' => $userRole,
+            'bio' => $userBio
         ];
 
         $allUsers[] = $userProfile;
@@ -114,12 +115,12 @@ if ($result && $result->num_rows > 0) {
                 'username' => 'Unknown',
                 'user_id' => NULL
             ];
-        }
+}
 
         // get all comments and their count 
 $comments = array();
 
-$commentsStmt = $conn->prepare("SELECT * FROM comments WHERE post_id = ?");
+$commentsStmt = $conn->prepare("SELECT * FROM comments WHERE post_id = ?  ORDER BY created_at DESC");
 $commentsStmt->bind_param('i', $post['post_id']);
 $commentsStmt->execute();
 $commentResult = $commentsStmt->get_result();

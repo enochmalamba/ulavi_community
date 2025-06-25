@@ -1,3 +1,6 @@
+h4 {
+  font-weight: 500;
+}
 input {
   font-size: 16px;
   width: 100%;
@@ -16,6 +19,7 @@ input {
 }
 
 .comments {
+  margin: 10px 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -23,16 +27,10 @@ input {
 
 .comment {
   display: flex;
-  flex-direction: column;
-  gap: 5px;
-  padding-bottom: 10px;
+  align-items: start;
+  gap: 6px;
 }
-.comment-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.comment-header img {
+.comment img {
   width: 35px;
   height: 35px;
   object-fit: cover;
@@ -40,16 +38,14 @@ input {
   border-radius: 50%;
 }
 
-.comment h4 {
+.comment-body {
+  width: calc(100% - 41px);
   display: flex;
   flex-direction: column;
-  margin-right: 5px;
-}
-
-h4 small {
-  font-weight: 300;
+  padding: 5px;
+  border: 1px solid var(--accent);
+  border-radius: 5px;
 }
 .comment-content {
   font-size: 16px;
-  padding-left: 5px;
 }

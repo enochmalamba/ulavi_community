@@ -27,8 +27,7 @@ const bioForm = () => {
 const changePasswordForm = () => {
   return `
  <form action="includes/backend/account_edit.php" method="post">
-        <label>Old password</label>
-        <input type="password" name="old_password" required />
+       
         <label>New password</label>
         <input type="password" name="new_password" required />
         <label>Confirm password</label>
@@ -114,7 +113,7 @@ const createPostModal = () => {
                 </span>
             </div>
             <div class="form-btns">
-                <button type="reset" id="cancel_modal_btn">Cancel</button>
+                <button type="reset" id="cancel-modal-btn">Cancel</button>
                 <button type="submit" name="create_post">Publish Post</button>
             </div>
         </form>
