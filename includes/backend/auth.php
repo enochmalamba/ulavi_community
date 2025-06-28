@@ -98,27 +98,6 @@ if (isset($_POST['signin'])) {
     }
 }
 
-function get_profile(){
-    global $conn; 
-    $stmt = $conn->prepare("SELECT user_role, user_title, dob, gender, user_location, profile_photo, bio FROM user_profile WHERE user_id = ?");
-    $stmt->bind_param('i', $_SESSION['user_id']);
-    if ($stmt->execute()){
-        $profileResult = $stmt->get_result();
-        if($profileResult->num_rows === 1){
-            $profileData = $profileResult->fetch_assoc();
-            $_SESSION['role'] = $profileData['user_role'];
-            $_SESSION['title'] = $profileData['user_title'];
-            $_SESSION['dob'] = $profileData['dob'];
-            $_SESSION['gender'] = $profileData['gender'];
-            $_SESSION['location'] = $profileData['user_location'];
-            $_SESSION['profile_photo'] = $profileData['profile_photo'];
-            $_SESSION['bio'] = $profileData['bio'];
-        }
-    } else {
-        error_log("get_profile error: " . $stmt->error); // Optional: log error
-    }
-}
-
 
 if (isset($_POST['logout'])) {
     session_destroy();
