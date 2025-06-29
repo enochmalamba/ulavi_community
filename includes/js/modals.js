@@ -96,6 +96,7 @@ const logOutModal = () => {
 
 const createPostModal = () => {
   return `
+      <?php if(isset($_SESSION['user_id'])): ?>
    
         <form action="includes/backend/post_submit.php" method="post" enctype="multipart/form-data">
             <label for="title">Enter post title <span>*</span></label>
@@ -117,5 +118,50 @@ const createPostModal = () => {
                 <button type="submit" name="create_post">Publish Post</button>
             </div>
         </form>
+      <?php else: ?>
+        <div class="unlock-content-modal">
+        <button class="close-btn" id="cancel-modal-btn">
+          <i class="bx bx-x" ></i>
+        </button>
+
+        <div class="modal-header">
+          <h2 class="modal-title">Unlock All Features</h2>
+          <p class="modal-subtitle">
+            Join thousands of users and get access to premium features
+          </p>
+        </div>
+
+        <ul class="features-list">
+          <li class="feature-item">
+            <i class="bx bx-check-circle feature-icon"></i>
+            <span>Unlimited access to all content</span>
+          </li>
+          <li class="feature-item">
+            <i class="bx bx-star feature-icon"></i>
+            <span>Premium templates and resources</span>
+          </li>
+          <li class="feature-item">
+            <i class="bx bx-shield-check feature-icon"></i>
+            <span>Priority customer support</span>
+          </li>
+          <li class="feature-item">
+            <i class="bx bx-cloud-upload feature-icon"></i>
+            <span>Advanced sync across devices</span>
+          </li>
+          <li class="feature-item">
+            <i class="bx bx-trending-up feature-icon"></i>
+            <span>Detailed analytics and insights</span>
+          </li>
+        </ul>
+
+        <div class="buttons-container">
+          <button class="btn btn-primary" onclick="signUp()">Sign Up</button>
+          <button class="btn btn-secondary" onclick="signIn()">Sign In</button>
+          <button class="btn btn-ghost" onclick="maybeLater()">
+            Maybe Later
+          </button>
+        </div>
+      </div>
+      <?php endif; ?>
     `;
 };
