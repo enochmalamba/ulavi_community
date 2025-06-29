@@ -565,6 +565,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
+  display: none;
 }
 
 .unlock-content-modal .buttons-container {
