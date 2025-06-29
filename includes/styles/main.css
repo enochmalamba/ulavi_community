@@ -92,7 +92,7 @@ body {
   transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
-  width: fit-content;
+  width: min(90%, 500px);
   height: auto;
   display: none;
   align-items: center;
@@ -177,14 +177,13 @@ main {
 }
 
 .header .logo {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  transition: color 0.3s ease;
-  text-transform: uppercase;
-  font-size: 18px;
-  color: var(--purple);
-  font-weight: 600;
+  height: 65px;
+}
+
+.header .logo img {
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
 }
 
 .header .logo i {
@@ -368,8 +367,7 @@ main {
     padding: 0 10px;
   }
   .header .logo {
-    font-size: 16px;
-    font-weight: 500;
+    height: 50px;
   }
 
   .header .current-page,
@@ -478,5 +476,168 @@ main {
   }
   .title.sml {
     font-size: 1rem;
+  }
+  .unlock-content-modal .modal {
+    padding: 20px 16px;
+    margin: 20px;
+    width: 95% !important;
+  }
+
+  .unlock-content-modal .modal-title {
+    font-size: 20px;
+  }
+
+  .unlock-content-modal .modal- ubtitle {
+    font-size: 13px;
+  }
+}
+
+/* auth-modal stles */
+.unlock-content-modal {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 24px;
+  width: min(90%, 360px) !important;
+  box-shadow: 0 4px 12px var(--shadow);
+  transform: translateY(0);
+  animation: slideUp 0.4s ease-out;
+  position: relative;
+}
+
+.unlock-content-modal .close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: var(--accent);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.unlock-content-modal .close-btn:hover {
+  color: var(--text);
+}
+
+.unlock-content-modal .modal-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.unlock-content-modal .modal-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--font);
+  margin-bottom: 6px;
+}
+
+.unlock-content-modal .modal-subtitle {
+  font-size: 14px;
+  color: var(--accent);
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.unlock-content-modal .features-list {
+  margin: 20px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.unlock-content-modal .feature-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.unlock-content-modal .feature-item:last-child {
+  margin-bottom: 0;
+}
+
+.unlock-content-modal .bx {
+  font-size: 25px;
+  color: var(--purple);
+  margin-right: 10px;
+  width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.unlock-content-modal .buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.unlock-content-modal .btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  text-decoration: none;
+  text-align: center;
+  display: block;
+}
+
+.unlock-content-modal .btn-primary {
+  background: var(--purple);
+  color: var(--white);
+  box-shadow: 0 2px 8px var(--purple-faded);
+}
+
+.unlock-content-modal .btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--purple-faded);
+}
+
+.unlock-content-modal .btn-secondary {
+  background: var(--grey);
+  color: var(--text);
+  border: 1px solid var(--grey);
+}
+
+.unlock-content-modal .btn-secondary:hover {
+  background: var(--bg2);
+  transform: translateY(-1px);
+}
+
+.unlock-content-modal .btn-ghost {
+  background: transparent;
+  color: var(--accent);
+  border: none;
+  font-weight: 400;
+}
+
+.unlock-content-modal .btn-ghost:hover {
+  color: var(--text);
+  background: var(--grey);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

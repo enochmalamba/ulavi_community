@@ -2,56 +2,41 @@
 // Start the session
 session_start();
 include_once('includes/backend/config.php');
+require 'includes/backend/fetch_data.php';
 
-if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
-    $user_id = intval($_GET['user_id']);
+
+//get the user id from the get request
+$targetId = isset($_GET['user_id']) ? intval($_GET['user_id']) : null;
+
+ 
+
+// get user data from allusers array
+$userData = array();
+foreach ($allUsers as $user) {
+    if ($user['id'] == $targetId) {
+        $userData = $user;
+        break;
+    }
+}
+$title = $userData['title'] ?? 'User';
+$bio = $userData['bio'] ?? 'No bio available';
+$profilePhoto = $userData['profile_photo'] ?? 'default_profile.png';
+$username = $userData['name'] ?? 'Unknown User';
+$user_id = $userData['id'] ?? null;
+// If user data is not found, redirect to home page
+if (empty($userData)) {
+    header('Location: home.php');
+    exit();
 }
 
-
-// $user_id = $_SESSION['user_id'];
-// $username = $_SESSION['username'];
-// $email = $_SESSION['email'];
-$username = "";
-$email = "";
-$user_role = "";
-$bio = "";
-$location = "";
-
-//fetch user data from the community_people table
-$stmt = $conn->prepare("SELECT username, email FROM community_people WHERE user_id = ?");
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-if ($result->num_rows > 0) {
-    $user_info = $result->fetch_assoc();
-    $username = $user_info['username'];
-    $email = $user_info['email'];
+//get posts for the user
+$userPosts = array();
+foreach ($postsArray as $post) {
+    if ($post['author']['id'] == $user_id) {
+        $userPosts[] = $post;
+    }
 }
 
-//fetch profile data from the user_profile table
-$stmt = $conn->prepare("SELECT bio, user_role, user_location, profile_photo FROM user_profile WHERE user_id = ?");
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-
-if ($result->num_rows > 0) {
-    $user_info = $result->fetch_assoc();
-    $user_role = $user_info['user_role'];
-    $bio = $user_info['bio'];
-    $location = $user_info['user_location'];
-    $profilePhoto = $user_info['profile_photo'];
-    //get user title/proffession
-    $titleStml = $conn->prepare("SELECT user_title FROM user_profile WHERE user_id = ?");
-    $titleStml->bind_param("i", $user_id);
-    $titleStml->execute();
-    $titleResult = $titleStml->get_result();
-    $title = $titleResult->fetch_assoc()['user_title'];
-} else {
-    $user_role = "Unverified";
-    $bio = "No bio yet";
-    $location = "No location yet";
-    $profilePhoto = "default.jpg";
-}
 
 
 ?>
@@ -75,33 +60,73 @@ if ($result->num_rows > 0) {
     <main>
         <div class="overlay" id="overlay"></div>
         <div class="header">
-            <a href="home.php" class="title sml logo"> <i class='bx bxs-palette'></i> <span>ulavi <br> community</span></a>
-            <h2 class="current-page title sml "><?php echo htmlspecialchars($username); ?> &bull; Profile</h2>
+            <a href="home.php" class="title sml logo"> <img src="includes/images/uo-wordmark.png"
+                    alt="ULAVi Online Wordmark"></a>
+            <h2 class="current-page title sml ">Home</h2>
             <form class="search-bar">
                 <input type="text" name="query" placeholder="Search..">
                 <button type="submit"><i class='bx bx-search'></i></button>
             </form>
+            <div class="mobile-nav">
+                <span><i class='bx bx-search'></i></span>
+
+
+                <span><i class="bx bx-user"></i>
+                    <div class="dropdown">
+                        <?php if(isset($_SESSION['user_id'])): ?>
+                        <a href="user.php"><img src="<?php echo $_SESSION['profile_photo']; ?>"
+                                class="dp"><?php echo $_SESSION['username']; ?></a>
+                        <?php else: ?>
+                        <span><a href="signin.php"><i class="bx bx-user"></i>Sign in</a></span>
+
+                        <?php endif; ?>
+                        <span class="light-mode"><i class="bx bx-sun"></i>Light mode</span>
+                        <span class="dark-mode"><i class="bx bx-moon"></i>Dark mode</span>
+                        <span class="logout-btn"><i class='bx bx-log-out'></i>Log out</span>
+                    </div>
+                </span>
+
+            </div>
         </div>
         <div class="container">
             <nav class="navigation">
                 <ul class="page-nav">
-                    <li><a href="home.php"><i class='bx bxs-home-alt-2'></i>Home</a></li>
-                    <li><a href=""><i class='bx bx-group'></i>Community</a></li>
-                    <li><a href="create_post.php" class="post-link"><i class='bx bx-border-circle bx-plus'></i>Post</a></li>
-                    <li><a href=""><i class='material-symbols-outlined'>person_play</i>Local talents</a></li>
-                    <li><a href=""><i class='bx bx-menu-alt-left'></i>More</a></li>
+                    <li><a href="home.php" class="active"><i class='bx bxs-home-alt-2'></i>
+                            <div>Home</div>
+                        </a></li>
+                    <li><a href="community.php"><i class='bx bx-group'></i>
+                            <div>Community</div>
+                        </a></li>
+                    <li <?php if (!isset($_SESSION['user_id'])): ?> class="trigger-auth-btn" <?php else: ?>
+                        id="create-post-btn" <?php endif; ?>>
+                        <span class="nav-btn"> <i class='bx bx-border-circle bx-plus'></i>
+                            <div>Post</div>
+                        </span>
+                    </li>
+                    <li><a href=""><i class='material-symbols-outlined'>person_play</i>
+                            <div>Local talents</div>
+                        </a></li>
+
                 </ul>
                 <ul class="user-nav">
-                    <li><a href=""><i class="bx bx-sun"></i>Light mode</a></li>
-                    <li><a href=""><i class='bx bx-log-out'></i>Log out</a></li>
+                    <li>
+                        <span class="nav-btn light-mode"><i class="bx bx-sun"></i>Light mode</span>
+                        <span class="nav-btn dark-mode"><i class="bx bx-moon"></i>Dark mode</span>
+                    </li>
+                    <li class="<?php echo isset($_SESSION['user_id']) ? 'logout-btn' : ''; ?>">
+                        <span class="nav-btn"><i class='bx bx-log-out'></i>Log out</span>
+                    </li>
 
-                    <li><a href="user/user.php"><i class='bx bx-user'></i>Profile</a></li>
+
+                    <li><a href="user.php"><i
+                                class='bx bx-user'></i><?php echo htmlspecialchars($_SESSION['username']) ?></a></li>
                 </ul>
             </nav>
             <div class="feed">
                 <div class="profile-view">
                     <div class="profile-header">
-                        <img src="<?php echo htmlspecialchars($profilePhoto); ?>" alt="<?php echo htmlspecialchars($username); ?>" class="profile-img">
+                        <img src="<?php echo htmlspecialchars($profilePhoto); ?>"
+                            alt="<?php echo htmlspecialchars($username); ?>" class="profile-img">
                         <div class="profile-details">
                             <h3 class="title sml"><?php echo htmlspecialchars($username); ?></h3>
                             <p><?php echo htmlspecialchars($title); ?></p>
@@ -125,33 +150,52 @@ if ($result->num_rows > 0) {
                 </div>
                 <div class="user-posts">
 
-                    <!-- <div class="post">
+                    <?php foreach ($userPosts as $post) : ?>
+                    <div class="post">
                         <div class="post-header">
-                            <div class="post-details">
-                                <div class="img"></div>
+                            <a href="profile.php?user_id=<?php echo $post['author']['id']; ?>">
+                                <div class="post-details">
+                                    <img src="<?php echo htmlspecialchars($post['author']['profile_photo']); ?>"
+                                        alt="<?php echo htmlspecialchars($post['author']['name']); ?>" loading="lazy"
+                                        class="img" />
+                                    <div class="post-author">
 
-                                <div class="post-author">
-                                    <h4 class="pa-name"><?php echo htmlspecialchars($postAuthor['username']); ?> </h4>
-                                    <small><?php echo htmlspecialchars($postAuthorInfo['user_role']); ?> &bull; <?php echo htmlspecialchars($post['created_at']); ?></small>
+                                        <h4 class="pa-name"><?php echo htmlspecialchars($post['author']['name']); ?>
+                                        </h4>
+
+                                        <small>
+                                            <!--<?php echo htmlspecialchars($post['author']['user_role']); ?> &bull;-->
+                                            <?php echo format_time(strtotime($post['date'])); ?>
+                                        </small>
+                                    </div>
                                 </div>
-
-                            </div>
-                            <div class="post-category">
-                                <a href=""><span class="material-symbols-outlined"><?php echo htmlspecialchars($categoryIcon); ?></span> <?php echo htmlspecialchars($category); ?></a>
-                            </div>
+                            </a>
+                            <!-- <div class="post-category" >
+                                    <a href="">
+                                        <span class="material-symbols-outlined"><?php echo htmlspecialchars($categoryIcon); ?></span> <?php echo htmlspecialchars($category); ?>
+                                    </a>
+                                </div> -->
                         </div>
-                        <h3 class="post-title title sml"><?php echo htmlspecialchars($post['title']); ?></h3>
+                        <a href="post.php?post_id=<?php echo $post['post_id']; ?>" class="post-link">
+                            <h3 class="post-title title sml"><?php echo $post['title']; ?></h3>
+                            <p class="post-content">
+                                <?php
+                                    // Show truncated content on the feed
+                                    $truncatedContent = substr($post['content'], 0, 150);
+                                    $suffix = strlen($post['content']) > 150 ? '...<strong>more</strong>' : '';
+                                    echo nl2br(htmlspecialchars($truncatedContent)) . $suffix;
+                                    ?>
+                            </p>
 
-                        <p class="post-content">
-                            <?php echo nl2br(htmlspecialchars($post['content'])); ?>
-                        </p>
-
-                        <?php if (!empty($post['media_url'])): ?>
+                            <?php if (!empty($post['media_url'])): ?>
                             <div class="post-image">
-                                <img src="<?php echo htmlspecialchars($post['media_url']); ?>" alt="<?php echo htmlspecialchars($post['title']); ?>">
+                                <img src="<?php echo htmlspecialchars($post['media_url']); ?>"
+                                    alt="<?php echo htmlspecialchars($post['title']); ?>">
                             </div>
-                        <?php endif; ?>
 
+
+                            <?php endif; ?>
+                        </a>
                         <div class="post-interactions">
                             <ul>
                                 <li>
@@ -159,26 +203,23 @@ if ($result->num_rows > 0) {
                                 </li>
                                 <li>
                                     <span class="material-symbols-outlined"> favorite</span>
-
                                 </li>
                                 <li>
                                     <span class="material-symbols-outlined"> forum</span>
-
+                                    <?php if ($post['comment_count'] > 0): ?>
+                                    <span class="comment-count"><?php echo $post['comment_count']; ?></span>
+                                    <?php endif; ?>
                                 </li>
                                 <li>
                                     <span class="material-symbols-outlined"> send</span>
-
                                 </li>
                             </ul>
-
                         </div>
-                    </div> -->
-
-                    <div class="no-posts">
-                        <img src="no-posts.png" alt="<?php echo htmlspecialchars($username); ?> has no posts, please check back later">#
-                        <p><?php echo htmlspecialchars($username); ?> has no posts, please check back later</p>
 
                     </div>
+                    <?php endforeach; ?>
+
+
                 </div>
             </div>
             <div class="right-sidebar">
@@ -190,7 +231,8 @@ if ($result->num_rows > 0) {
                     <img src="stakks.jpg" alt="">
                 </div>
                 <div class="card">
-                    <h2 class="title sml" style="font-size: 15px;"><span class="material-symbols-outlined" style="font-size: 20px;">
+                    <h2 class="title sml" style="font-size: 15px;"><span class="material-symbols-outlined"
+                            style="font-size: 20px;">
                             ad
                         </span>Ad</h2>
                     <img src="ad.jpeg" alt="">

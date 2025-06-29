@@ -87,5 +87,17 @@ logoutBtn.forEach((btn) => {
     openModal(logOutModal);
   };
 });
-createPostBtn.onclick = () => openModal(createPostModal);
-feedPostCreateBtn.onclick = () => openModal(createPostModal);
+if (createPostBtn) {
+  createPostBtn.onclick = () => openModal(createPostModal);
+}
+if (feedPostCreateBtn) {
+  feedPostCreateBtn.onclick = () => openModal(createPostModal);
+}
+
+if (document.querySelectorAll(".trigger-auth-btn")) {
+  document.querySelectorAll(".trigger-auth-btn").forEach((btn) => {
+    btn.onclick = () => {
+      openModal(authModal);
+    };
+  });
+}

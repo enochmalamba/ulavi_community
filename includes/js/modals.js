@@ -79,8 +79,10 @@ const genderForm = () => {
         <option value="Other">Other</option>
         <option value="Hidden">Prefer not to say</option>
      </select>
+     <div class="form-btns">
     <button id="cancel-modal-btn">Cancel</button>
     <button type="submit" name="update_gender">Save</button>
+    </div>
   </form>
   `;
 };
@@ -89,15 +91,15 @@ const logOutModal = () => {
   return `
     <form class="modal-form" method="post" action="includes/backend/auth.php">
         <p>Are you sure you want to log out?</p>
-        <input type="reset" value="Cancel" id="cancel-modal-btn" name="reset_log_out">
-        <input type="submit" value="Log out" name="logout">
+        <div class="form-btns">
+         <button type="reset" id="cancel-modal-btn">Cancel</button>
+                <button type="submit" name="logout">Log Out</button>
+        </div>
     </form>`;
 };
 
 const createPostModal = () => {
-  return `
-      <?php if(isset($_SESSION['user_id'])): ?>
-   
+  return `   
         <form action="includes/backend/post_submit.php" method="post" enctype="multipart/form-data">
             <label for="title">Enter post title <span>*</span></label>
             <input type="text" name="title" id="title" placeholder="Write an attention-grabbing headline..." required>
@@ -118,50 +120,48 @@ const createPostModal = () => {
                 <button type="submit" name="create_post">Publish Post</button>
             </div>
         </form>
-      <?php else: ?>
-        <div class="unlock-content-modal">
-        <button class="close-btn" id="cancel-modal-btn">
-          <i class="bx bx-x" ></i>
-        </button>
+    `;
+};
 
+const authModal = () => {
+  return `
+     <div class="unlock-content-modal">
         <div class="modal-header">
           <h2 class="modal-title">Unlock All Features</h2>
           <p class="modal-subtitle">
-            Join thousands of users and get access to premium features
+            Join thousands of users and get access to all features
           </p>
         </div>
 
         <ul class="features-list">
           <li class="feature-item">
-            <i class="bx bx-check-circle feature-icon"></i>
-            <span>Unlimited access to all content</span>
+            <i class="bx bx-user-id-card"></i>
+            <span
+              >Create a profile for yourself, your team, or your
+              organization</span
+            >
           </li>
           <li class="feature-item">
-            <i class="bx bx-star feature-icon"></i>
-            <span>Premium templates and resources</span>
+            <i class="bx bx-user-voice"></i>
+            <span>Get a voice and create posts on your profile</span>
           </li>
           <li class="feature-item">
-            <i class="bx bx-shield-check feature-icon"></i>
-            <span>Priority customer support</span>
+            <i class="bx bx-people-heart"></i>
+            <span>Connect with others and share ideas</span>
           </li>
           <li class="feature-item">
-            <i class="bx bx-cloud-upload feature-icon"></i>
-            <span>Advanced sync across devices</span>
-          </li>
-          <li class="feature-item">
-            <i class="bx bx-trending-up feature-icon"></i>
-            <span>Detailed analytics and insights</span>
+            <i class="bx bx-people-heart"></i>
+            <span>+Many more </span>
           </li>
         </ul>
 
         <div class="buttons-container">
-          <button class="btn btn-primary" onclick="signUp()">Sign Up</button>
-          <button class="btn btn-secondary" onclick="signIn()">Sign In</button>
-          <button class="btn btn-ghost" onclick="maybeLater()">
+          <a href="/signup.php" class="btn btn-primary">Sign Up</a>
+          <a href="/signin.php" class="btn btn-secondary">Sign In</a>
+          <button class="btn btn-ghost" id="cancel-modal-btn">
             Maybe Later
           </button>
         </div>
       </div>
-      <?php endif; ?>
-    `;
+  `;
 };

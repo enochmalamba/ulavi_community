@@ -12,6 +12,10 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
+    <link
+      href="https://cdn.boxicons.com/fonts/brands/boxicons-brands.min.css"
+      rel="stylesheet"
+    />
     <style>
       :root {
         --bg: #f1f1f1;
@@ -123,7 +127,7 @@
         margin-bottom: 0;
       }
 
-      .unlock-content-modal .feature-icon {
+      .unlock-content-modal .bx {
         font-size: 25px;
         color: var(--purple);
         margin-right: 10px;
@@ -236,30 +240,30 @@
 
         <ul class="features-list">
           <li class="feature-item">
-            <i class="bx bx-user-id-card feature-icon"></i>
+            <i class="bx bx-user-id-card"></i>
             <span
               >Create a profile for yourself, your team, or your
               organization</span
             >
           </li>
           <li class="feature-item">
-            <i class="bx bx-user-voice feature-icon"></i>
+            <i class="bx bx-user-voice"></i>
             <span>Get a voice and create posts on your profile</span>
           </li>
           <li class="feature-item">
-            <i class="bx bx-people-heart feature-icon"></i>
-            <span>Connect with other users and share ideas</span>
+            <i class="bx bx-people-heart"></i>
+            <span>Connect with others and share ideas</span>
           </li>
           <li class="feature-item">
-            <i class="bx bx-heart-plus feature-icon"></i>
+            <i class="bx bx-people-heart"></i>
             <span>+Many more </span>
           </li>
         </ul>
 
         <div class="buttons-container">
-          <button class="btn btn-primary" onclick="signUp()">Sign Up</button>
-          <button class="btn btn-secondary" onclick="signIn()">Sign In</button>
-          <button class="btn btn-ghost" onclick="maybeLater()">
+          <a href="/signup.php" class="btn btn-primary">Sign Up</a>
+          <a href="/signin.php" class="btn btn-secondary">Sign In</a>
+          <button class="btn btn-ghost" id="cancel-modal-btn">
             Maybe Later
           </button>
         </div>

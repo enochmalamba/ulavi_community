@@ -44,31 +44,45 @@ if (isset($_GET["post_id"]) && is_numeric($_GET["post_id"])) {
         <div class="modal-container" id="modal-container"></div>
 
         <div class="header">
-            <a href="home.php" class="title sml logo"> <i class='bx bxs-palette'></i> <span>ulavi <br>
-                    community</span></a>
-            <h2 class="current-page title sml ">Post</h2>
+            <a href="home.php" class="title sml logo"> <img src="includes/images/uo-wordmark.png"
+                    alt="ULAVi Online Wordmark"></a>
+            <h2 class="current-page title sml ">Home</h2>
             <form class="search-bar">
                 <input type="text" name="query" placeholder="Search..">
                 <button type="submit"><i class='bx bx-search'></i></button>
             </form>
             <div class="mobile-nav">
                 <span><i class='bx bx-search'></i></span>
-                <span class="light-mode"><i class="bx bx-sun"></i></span>
-                <span class="dark-mode"><i class="bx bx-moon"></i></span>
-                <a href="user.php"><i class="bx bx-user"></i></a>
+
+
+                <span><i class="bx bx-user"></i>
+                    <div class="dropdown">
+                        <?php if(isset($_SESSION['user_id'])): ?>
+                        <a href="user.php"><img src="<?php echo $_SESSION['profile_photo']; ?>"
+                                class="dp"><?php echo $_SESSION['username']; ?></a>
+                        <?php else: ?>
+                        <span><a href="signin.php"><i class="bx bx-user"></i>Sign in</a></span>
+
+                        <?php endif; ?>
+                        <span class="light-mode"><i class="bx bx-sun"></i>Light mode</span>
+                        <span class="dark-mode"><i class="bx bx-moon"></i>Dark mode</span>
+                        <span class="logout-btn"><i class='bx bx-log-out'></i>Log out</span>
+                    </div>
+                </span>
 
             </div>
         </div>
         <div class="container">
             <nav class="navigation">
                 <ul class="page-nav">
-                    <li><a href="" class="active"><i class='bx bxs-home-alt-2'></i>
-                            <div>Post</div>
+                    <li><a href="home.php" class="active"><i class='bx bxs-home-alt-2'></i>
+                            <div>Home</div>
                         </a></li>
-                    <li><a href=""><i class='bx bx-group'></i>
+                    <li><a href="community.php"><i class='bx bx-group'></i>
                             <div>Community</div>
                         </a></li>
-                    <li id="create-post-btn">
+                    <li <?php if (!isset($_SESSION['user_id'])): ?> class="trigger-auth-btn" <?php else: ?>
+                        id="create-post-btn" <?php endif; ?>>
                         <span class="nav-btn"> <i class='bx bx-border-circle bx-plus'></i>
                             <div>Post</div>
                         </span>
@@ -76,20 +90,20 @@ if (isset($_GET["post_id"]) && is_numeric($_GET["post_id"])) {
                     <li><a href=""><i class='material-symbols-outlined'>person_play</i>
                             <div>Local talents</div>
                         </a></li>
-                    <li id="menu-btn"><span class="nav-btn"><i class='bx bx-menu'></i>
-                            <div>More</div>
-                        </span></li>
+
                 </ul>
                 <ul class="user-nav">
                     <li>
                         <span class="nav-btn light-mode"><i class="bx bx-sun"></i>Light mode</span>
                         <span class="nav-btn dark-mode"><i class="bx bx-moon"></i>Dark mode</span>
                     </li>
-                    <li id="logout-btn"><span class="nav-btn"><i class='bx bx-log-out'></i>Log out</span></li>
+                    <li class="<?php echo isset($_SESSION['user_id']) ? 'logout-btn' : ''; ?>">
+                        <span class="nav-btn"><i class='bx bx-log-out'></i>Log out</span>
+                    </li>
 
-                    <li><a href="user.php"><i class='bx bx-user'></i><?php echo htmlspecialchars(
-                                  $_SESSION["username"],
-                                ); ?></a></li>
+
+                    <li><a href="user.php"><i
+                                class='bx bx-user'></i><?php echo htmlspecialchars($_SESSION['username']) ?></a></li>
                 </ul>
             </nav>
             <div class="feed">

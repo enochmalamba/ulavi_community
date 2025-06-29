@@ -25,8 +25,8 @@ require 'includes/backend/fetch_data.php'
         <div class="modal-container" id="modal-container"></div>
 
         <div class="header">
-            <a href="home.php" class="title sml logo"> <i class='bx bxs-palette'></i> <span>ulavi <br>
-                    community</span></a>
+            <a href="home.php" class="title sml logo"> <img src="includes/images/uo-wordmark.png"
+                    alt="ULAVi Online Wordmark"></a>
             <h2 class="current-page title sml ">Home</h2>
             <form class="search-bar">
                 <input type="text" name="query" placeholder="Search..">
@@ -62,7 +62,8 @@ require 'includes/backend/fetch_data.php'
                     <li><a href="community.php"><i class='bx bx-group'></i>
                             <div>Community</div>
                         </a></li>
-                    <li id="create-post-btn">
+                    <li <?php if (!isset($_SESSION['user_id'])): ?> class="trigger-auth-btn" <?php else: ?>
+                        id="create-post-btn" <?php endif; ?>>
                         <span class="nav-btn"> <i class='bx bx-border-circle bx-plus'></i>
                             <div>Post</div>
                         </span>
@@ -70,23 +71,25 @@ require 'includes/backend/fetch_data.php'
                     <li><a href=""><i class='material-symbols-outlined'>person_play</i>
                             <div>Local talents</div>
                         </a></li>
-                    <li id="menu-btn"><span class="nav-btn"><i class='bx bx-menu'></i>
-                            <div>More</div>
-                        </span></li>
+
                 </ul>
                 <ul class="user-nav">
                     <li>
                         <span class="nav-btn light-mode"><i class="bx bx-sun"></i>Light mode</span>
                         <span class="nav-btn dark-mode"><i class="bx bx-moon"></i>Dark mode</span>
                     </li>
-                    <li class="logout-btn"><span class="nav-btn"><i class='bx bx-log-out'></i>Log out</span></li>
+                    <li class="<?php echo isset($_SESSION['user_id']) ? 'logout-btn' : ''; ?>">
+                        <span class="nav-btn"><i class='bx bx-log-out'></i>Log out</span>
+                    </li>
+
 
                     <li><a href="user.php"><i
                                 class='bx bx-user'></i><?php echo htmlspecialchars($_SESSION['username']) ?></a></li>
                 </ul>
             </nav>
             <div class="feed">
-                <div class="create-post-btn" id="feedPostCreateBtn">
+                <div class="create-post-btn" <?php if (!isset($_SESSION['user_id'])): ?> class="trigger-auth-btn"
+                    <?php endif; ?> id="feedPostCreateBtn">
                     <!-- <h2 class="title sml" style="padding-left: 5px;">Create post</h2> -->
                     <p>Share your thoughts, ideas, or story...</p>
                 </div>
